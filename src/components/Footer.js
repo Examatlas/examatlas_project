@@ -7,7 +7,7 @@ import { FaLinkedinIn } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="text-white py-10 bg-black h-[500px] mt-[700px]">
+    <footer className="text-white py-10 bg-black h-[500px] ">
       <div className="container mx-auto flex flex-col items-center ">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-6xl">
           <div>
@@ -23,7 +23,7 @@ const Footer = () => {
             <h3 className="text-xl font-bold mt-12">Company</h3>
             <ul>
               <li><a href="#" className="hover:text-blue-400">About us</a></li>
-              <li><a href="#" className="hover:text-blue-400">Careers We are hiring</a></li>
+              <li><a href="#" className="hover:text-blue-400">Careers </a></li>
               <li><a href="#" className="hover:text-blue-400">Teach Online on ExamAtlas</a></li>
               <li><a href="#" className="hover:text-blue-400">Media</a></li>
               <li><a href="#" className="hover:text-blue-400">Sitemap</a></li>

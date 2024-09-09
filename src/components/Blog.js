@@ -32,7 +32,7 @@ const Blog = () => {
 
     return (
         <>
-            <div className="flex mt-12">
+            <div className="flex mt-12 ">
 
                 <div className=" w-[850px] pl-44">
                     <h1 className="text-3xl text-blue-700 font-extrabold">Latest Blogs</h1>

@@ -9,7 +9,7 @@ import EventList from "./LiveClassData";
 import Enroll from "./Enroll";
 import ExamAtlas from "./ExamAtlas";
 import MobileApp from "./MobileApp";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 
 const Home = () =>{
     return(
@@ -24,7 +24,7 @@ const Home = () =>{
         <Enroll/>
         <ExamAtlas/>
         <MobileApp/>
-        <Footer/>
+        {/* <Footer/> */}
     
         </>
     )

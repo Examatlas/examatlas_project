@@ -4,9 +4,9 @@ import { MdArrowRight } from "react-icons/md";
 const MobileApp = () => {
     return (
         <>
-        <div className="flex absolute">
-            <div className="border border-blue-500 bg-blue-600 w-[1600px] h-[400px]  mt-24 ml-64 mb-20 text-white rounded-lg">
-                <div className="pl-36 pt-24">
+        <div className="flex justify-between mt-24 mb-20 relative">
+            <div className="border border-blue-500 bg-blue-600 w-[1050px] h-[400px] ml-64 text-white rounded-lg relative">
+                <div className="pl-16 pt-16">
                     <p className="text-2xl font-semibold">
                         Start your learning journey now!
                     </p>
@@ -25,23 +25,25 @@ const MobileApp = () => {
                             Succeed <MdArrowRight className="ml-1 text-white text-3xl" />
                         </p>
                     </div>
+
+                    <div className="flex mt-5 space-x-4">
+                        <img src="https://testbook.com/angular/assets/img/template-img/appstore.svg" className="mr-5 w-28" />
+                        <img src="https://testbook.com/angular/assets/img/template-img/playstore.svg" className="w-28" />
+                    </div>
+
+                    <button className="ml-16 font-semibold w-40 rounded-lg bg-green-500 hover:bg-green-400 mt-6 py-2">
+                        Get Started
+                    </button>
                 </div>
 
-
-                <div className="flex mt-5 ml-48">
-                    <img src="https://testbook.com/angular/assets/img/template-img/appstore.svg" className="mr-5" />
-                    <img src="https://testbook.com/angular/assets/img/template-img/playstore.svg" />
+              
+                <div className="absolute right-[-0px] top-[-50px]">
+                    <img src="https://testbook.com/assets/img/index/web-phone.png" className="h-[520px] w-[450px]" />
                 </div>
-                <button className="ml-64 font-semibold w-32 rounded-lg bg-green-500 hover:bg-green-400 mt-6 p-2">Get Started</button>
             </div>
-
-            <div>
-                <img src="https://testbook.com/assets/img/index/web-phone.png" className="relative right-[520px] top-3 h-[600px] w-[800px]"/>
-            </div>
-
-
-            </div>
+        </div>
         </>
     )
 }
+
 export default MobileApp;

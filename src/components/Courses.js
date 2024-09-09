@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { IoArrowForwardCircleSharp } from "react-icons/io5";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { CiStreamOn } from "react-icons/ci";
+import upsc from "../images/upsc.png"
+import img2 from "../images/img2.png"
+import img3 from "../images/img3.png"
+import img4 from "../images/img4.png"
 
 const Courses = () => {
     const courses = [
@@ -73,8 +77,6 @@ const Courses = () => {
                 </button>
             </div>
 
-
-
             <div className="flex flex-wrap ml-72 mt-1 gap-x-8 ">
                 {/* Box 1 */}
                 <div className="w-[500px] mb-4 rounded-lg flex  transform hover:scale-105 transition-transform duration-300">
@@ -84,7 +86,7 @@ const Courses = () => {
                             <span className="text-lg">Live Classes</span>
                         </button>
                         <img
-                            src="https://cdn.testbook.com/products/2024/August/8/__w-200-400-600__/Course%20Banner%20Part%203%20%285%29.png.png"
+                            src={upsc}
                             alt="Description of image"
                             className="w-[280px] h-[150px] rounded-lg"
                         />
@@ -100,7 +102,7 @@ const Courses = () => {
                 <div className="w-[500px] mb-11 rounded-lg flex  transform hover:scale-105 transition-transform duration-300">
                     <div>
                         <img
-                            src="https://cdn.testbook.com/products/2024/August/12/__w-200-400-600__/SSC%20CGL%20Top%201000%20.png.png"
+                            src={img2}
                             alt="Description of image"
                             className="w-[280px] h-[150px] rounded-lg mt-10"
                         />
@@ -120,7 +122,7 @@ const Courses = () => {
                             <span className="text-lg">Live Classes</span>
                         </button>
                         <img
-                            src="https://cdn.testbook.com/products/2024/February/2/__w-200-400-600__/CA_GM.png.png"
+                            src={img3}
                             alt="Description of image"
                             className="w-[280px] h-[150px] rounded-lg"
                         />
@@ -141,7 +143,7 @@ const Courses = () => {
                             <span >VOD</span>
                         </button>
                         <img
-                            src="https://cdn.testbook.com/products/2024/August/9/__w-200-400-600__/Copy%20of%20Course%20Banner%20Part%203%20%282%29.jpg.jpeg"
+                            src={img4}
                             alt="Description of image"
                             className="w-[280px] h-[155px] rounded-lg"
                         />

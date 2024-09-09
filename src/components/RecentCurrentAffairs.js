@@ -1,5 +1,5 @@
 import React from "react";
-const RecentBlog = () => {
+const RecentCurrentAffairs = () => {
     const data = [
         {
             id: 6,
@@ -37,7 +37,7 @@ const RecentBlog = () => {
         <>
             <div className="flex mb-20">
                 <div className=" w-[700px] ml-40">
-                    <h1 className="text-3xl text-blue-700 font-extrabold ">Recent Blog</h1>
+                    <h1 className="text-3xl text-blue-700 font-extrabold ">Recent Current Affairs</h1>
 
                     {data.map((item, index) => (
                         <div key={item.id} className="pt-7">
@@ -74,5 +74,5 @@ const RecentBlog = () => {
         </>
     )
 }
-export default RecentBlog;
+export default RecentCurrentAffairs;
 

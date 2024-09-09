@@ -32,8 +32,6 @@ const Enroll = () =>{
               <button className="border border-sky-500 bg-sky-500 rounded-lg p-2 hover:bg-sky-400 w-56 mt-6 text-white">Explore ExamAtlas Pass</button>
             </div>
         </div>
-
-       
         </>
     )
 }
