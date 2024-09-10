@@ -32,17 +32,19 @@ const Blog = () => {
 
     return (
         <>
-            <div className="flex mt-12 ">
+            <div className="flex flex-col xl:flex-row mt-28 ">
 
-                <div className=" w-[850px] pl-44">
+                <div className=" lg:w-[850px] px-2 xl:pl-44">
                     <h1 className="text-3xl text-blue-700 font-extrabold">Latest Blogs</h1>
-                    <img src="https://anujjindal.in/wp-content/uploads/2024/08/WVfGiOlZgYQ-SD.jpg" className="rounded-lg mt-10 w-[900px] h-[379px] object-cover" />
+                    <img src="https://anujjindal.in/wp-content/uploads/2024/08/WVfGiOlZgYQ-SD.jpg" 
+                    className="rounded-lg mt-10 lg:w-[900px] h-[5rem] xl:h-[380px] object-cover" 
+                    />
                     <p className="mt-7 text-gray-800 text-xl font-extrabold">How to cover current affairs for RBI Grade B 2024</p>
                     <p className="mt-5 text-gray-700 font-semibold">Aug 6, 2024 | RBI Grade B</p>
                 </div>
 
-                <div className="flex flex-col pl-16">
-                    <h1 className="text-3xl text-blue-700 font-extrabold ">Trending Blog</h1>
+                <div className="flex flex-col my-4 px-4 md:pl-16">
+                    <h1 className=" text-xl md:text-3xl text-blue-700 font-extrabold ">Trending Blog</h1>
 
 
                     {data.map((item,index) => (
@@ -56,18 +58,18 @@ const Blog = () => {
                                 </p>
                                 <img
                                     src={item.image}
-                                    className="w-[200px] object-cover h-[112px] ml-3 rounded-lg"
+                                    className="w-[200px] object-cover h-[112px] ml-3 rounded-lg "
                                 />
                             </div>
                             {index  < data.length -1 && (
-                                 <hr className="w-[520px] border-gray-300 mt-4" />
+                                 <hr className="lg:w-[520px] border-gray-300 mt-4" />
                             )}
                         </div>
                     ))}
                 </div>
                 
             </div>
-            <hr className="w-[1290px] border-blue-900 border-t-2 mt-12 mb-12 ml-40" />
+            <hr className="w-[90%] mx-auto border-blue-900 border-t-2 mt-12 mb-12 " />
             <RecentBlog/>
         </>
     )

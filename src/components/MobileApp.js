@@ -4,14 +4,14 @@ import { MdArrowRight } from "react-icons/md";
 const MobileApp = () => {
     return (
         <>
-        <div className="flex justify-between mt-24 mb-20 relative">
-            <div className="border border-blue-500 bg-blue-600 w-[1050px] h-[400px] ml-64 text-white rounded-lg relative">
-                <div className="pl-16 pt-16">
+        <div className="flex flex-col md:flex-row justify-between mt-24 mb-20 relative">
+            <div className="border overflow-hidden border-blue-500 bg-blue-600 w-[95%] h-[40rem] md:h-[400px] mx-auto text-white rounded-lg relative">
+                <div className="flex flex-col px-4 md:pl-16 pt-16">
                     <p className="text-2xl font-semibold">
                         Start your learning journey now!
                     </p>
 
-                    <div className="flex pt-4 space-x-4">
+                    <div className="flex pt-4 space-x-1 md:space-x-4">
                         <p className="flex items-center">
                             Learn <MdArrowRight className="ml-1 text-white text-3xl" />
                         </p>
@@ -22,12 +22,13 @@ const MobileApp = () => {
                             Improve <MdArrowRight className="ml-1 text-white text-3xl" />
                         </p>
                         <p className="flex items-center">
-                            Succeed <MdArrowRight className="ml-1 text-white text-3xl" />
+                            Succeed 
+                            {/* <MdArrowRight className="ml-1 text-white text-3xl" /> */}
                         </p>
                     </div>
 
-                    <div className="flex mt-5 space-x-4">
-                        <img src="https://testbook.com/angular/assets/img/template-img/appstore.svg" className="mr-5 w-28" />
+                    <div className="flex items-center justify-center md:w-[40%] mt-5 space-x-4">
+                        <img src="https://testbook.com/angular/assets/img/template-img/appstore.svg" className=" w-28" />
                         <img src="https://testbook.com/angular/assets/img/template-img/playstore.svg" className="w-28" />
                     </div>
 
@@ -37,7 +38,7 @@ const MobileApp = () => {
                 </div>
 
               
-                <div className="absolute right-[-0px] top-[-50px]">
+                <div className="absolute bottom-[-40%] left-2 overflow-y-hidden md:left-[40rem] md:top-[50px]">
                     <img src="https://testbook.com/assets/img/index/web-phone.png" className="h-[520px] w-[450px]" />
                 </div>
             </div>

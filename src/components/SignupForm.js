@@ -25,7 +25,7 @@ const SignupForm = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden overflow-x-hidden ">
-      <div className="bg-white p-6 rounded-md shadow-lg w-[500px] h-[600px] relative">
+      <div className="bg-white p-6 rounded-md shadow-lg w-96 h-[600px] relative">
         <IoMdClose
           className="absolute top-6 right-5 text-gray-700 cursor-pointer"
           size={24}

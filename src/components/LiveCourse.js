@@ -174,7 +174,7 @@ const LiveCourse = () => {
 
   return (
     <>
-      <div className="mt-10 ml-52 mr-52">
+      <div className="mt-10 mx-4 sm:mx-10 md:mx-44 ">
         <h1 className="text-4xl font-bold">UPSC Online Course</h1>
         <p className="pt-6 font-light">
           UPSC Online Coaching is an excellent choice for those aspiring to crack the prestigious UPSC exam.UPSC exam. The UPSC Online Coaching Program at ExamAtlas is designed to provide students with the finest and most cost-effective courses. Our expertise and guidance provide students with a solid foundation and a strategic approach to tackle the challenges of the UPSC examination, not only via its own courses, but also via OnlyIAS courses. So, start your IAS preparation journey with a ExamAtlas UPSC course now.
@@ -183,7 +183,7 @@ const LiveCourse = () => {
 
       <div className="mt-8 p-5 bg-blue-100">
         <button
-          className={`font-semibold ml-48 text-lg ${activeTab === 'allBatches' ? 'text-blue-500 ' : ''}`}
+          className={`font-semibold md:ml-48 text-lg ${activeTab === 'allBatches' ? 'text-blue-500 ' : ''}`}
           onClick={() => setActiveTab('allBatches')}
         >
           All Batches
@@ -202,7 +202,7 @@ const LiveCourse = () => {
         </button>
       </div>
 
-      <div className="mt-5 ml-52 mr-52">
+      <div className="mt-5 mx-4 sm:mx-28 md:mx-20 ">
         {renderComponent()}
       </div>
     </>
@@ -214,11 +214,11 @@ const AllBatchesComponent = ({ onViewAllClick, onViewSecondAllClick }) => {
   const visibleSecondCourses = batchData.slice(0, 3);
 
   return (
-    <div>
+    <div className="w-[100%]">
       <h1 className="font-semibold text-2xl">ExamAtlas ONLY IAS UPSC Courses</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:p-6 ">
         {visibleCourses.map((course, index) => (
-          <div key={index} className="border rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
+          <div key={index} className="border w-full rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
             <img src={course.image1} alt="Course 1" className="w-96 rounded-lg" />
             <h2 className="text-xl font-semibold mt-4 mb-2">{course.title}</h2>
             <div className="flex space-x-4 mb-14">
@@ -228,8 +228,8 @@ const AllBatchesComponent = ({ onViewAllClick, onViewSecondAllClick }) => {
             <hr />
             <p className="text-xl mt-3 text-blue-500 font-semibold mb-1">{course.price}</p>
             <div className="flex justify-between items-center mt-4">
-              <button className="border border-blue-500 text-blue-500 rounded-lg px-11 py-2 font-semibold">{course.exploreText}</button>
-              <button className="bg-blue-500 text-white px-11 py-2 rounded-lg hover:bg-blue-600 font-semibold">
+              <button className="border border-blue-500 text-blue-500 rounded-lg px-4 py-2 font-semibold">{course.exploreText}</button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold">
                 {course.buyNowText}
               </button>
             </div>
@@ -259,8 +259,8 @@ const AllBatchesComponent = ({ onViewAllClick, onViewSecondAllClick }) => {
               <p className="ml-20 mt-4 bg-green-100 p-1 rounded-lg text-green-500 font-semibold">{batch.discount}</p>
             </div>
             <div className="flex justify-between items-center mt-4">
-              <button className="border border-blue-500 text-blue-500 rounded-lg px-11 py-2 font-semibold">{batch.buttonText}</button>
-              <button className="bg-blue-500 text-white px-11 py-2 rounded-lg hover:bg-blue-600 font-semibold">
+              <button className="border border-blue-500 text-blue-500 rounded-lg px-4 py-2 font-semibold">{batch.buttonText}</button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold">
                 {batch.buyNowText}
               </button>
             </div>
@@ -370,8 +370,8 @@ const ExamAtlasOnlyIASComponent = ({ showAll, setShowAll }) => {
             <p className="text-xl mt-3 text-blue-500 font-semibold mb-1">{course.price}</p>
             <p className="text-sm mb-1 font-extralight">Full fees: {course.fullFees}</p>
             <div className="flex justify-between items-center mt-4">
-              <button className="border border-blue-500 text-blue-500 rounded-lg px-11 py-2 font-semibold">{course.exploreText}</button>
-              <button className="bg-blue-500 text-white px-11 py-2 rounded-lg hover:bg-blue-600 font-semibold">
+              <button className="border border-blue-500 text-blue-500 rounded-lg px-6 py-2 font-semibold">{course.exploreText}</button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold">
                 {course.buyNowText}
               </button>
             </div>
@@ -467,8 +467,8 @@ const UPSCComponent = ({ showSecond, setShowSecond }) => {
               <p className="ml-20 mt-4 bg-green-100 p-1 rounded-lg text-green-500 font-semibold">{batch.discount}</p>
             </div>
             <div className="flex justify-between items-center mt-4">
-              <button className="border border-blue-500 text-blue-500 rounded-lg px-11 py-2 font-semibold">{batch.buttonText}</button>
-              <button className="bg-blue-500 text-white px-11 py-2 rounded-lg hover:bg-blue-600 font-semibold">
+              <button className="border border-blue-500 text-blue-500 rounded-lg px-6 py-2 font-semibold">{batch.buttonText}</button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-semibold">
                 {batch.buyNowText}
               </button>
             </div>
