@@ -35,9 +35,9 @@ const RecentBlog = () => {
 
     return (
         <>
-            <div className="flex mb-20">
-                <div className=" w-[700px] ml-40">
-                    <h1 className="text-3xl text-blue-700 font-extrabold ">Recent Blog</h1>
+            <div className="flex flex-col xl:flex-row mb-20">
+                <div className=" lg:w-[700px] mx-4 lg:ml-40">
+                    <h1 className=" text-xl md:text-3xl text-blue-700 font-extrabold ">Recent Blog</h1>
 
                     {data.map((item, index) => (
                         <div key={item.id} className="pt-7">
@@ -54,14 +54,14 @@ const RecentBlog = () => {
                                 />
                             </div>
                             {index < data.length - 1 && (
-                                <hr className="w-[720px] border-gray-300 mt-4" />
+                                <hr className="w-[90%] mx-auto xl:w-[720px] border-gray-300 mt-4" />
                             )}
                         </div>
                     ))}
                 </div>
                 <div>
-                    <p className="text-2xl font-semibold pl-20">Discover more of what you are preparing for</p>
-                    <div className="pl-36 pt-14">
+                    <p className="text-2xl font-semibold px-4 lg:pl-20">Discover more of what you are preparing for</p>
+                    <div className=" mx-auto px-7 pt-14 md:pl-20 py-3 ">
                         <button className="border border-green-500 p-3 rounded-lg w-40 mr-4 hover:bg-green-100 text-green-600 font-semibold">RBI Grade B</button>
                         <button className="border border-green-500 p-3 rounded-lg w-40 hover:bg-green-100 text-green-600 font-semibold">SEBI Grade B</button><br/>
                         <button className="border border-green-500 p-3 rounded-lg w-40 mt-6 mr-4 hover:bg-green-100 text-green-600 font-semibold">NABARD Grade A</button>

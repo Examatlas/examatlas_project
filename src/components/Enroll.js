@@ -7,14 +7,14 @@ import { TiSortAlphabetically } from "react-icons/ti";
 const Enroll = () =>{
     return(
         <>
-        <div className="bg-gradient-to-t from-sky-100 to-white h-[550px] text-black mt-80 flex">
-            <div className=" w-[750px]">
+        <div className="bg-gradient-to-t from-sky-100 to-white h-auto px-6 py-6 text-black flex flex-col md:flex-row">
+            <div className="w-[100%] md:w-[50%] flex justify-center md:justify-end ">
             <img src="https://testbook.com/assets/img/index/explore-pass__illust.svg" alt="Description of the image"
-            className="mt-24 ml-72 "
+            className="mt-24  "
             />
             </div>
 
-            <div className=" w-[750px] ml-14">
+            <div className=" w-[100%] md:w-[50%] md:ml-14">
               <p className="mt-14  text-2xl font-semibold">Enroll in Test Series for 670+ exams with</p>
               <p className="text-2xl font-bold font-mono  mt-3">ExamAtlas</p>
               <p className="mt-9">Get unlimited access to the most relevant Mock Tests, on India's <br/> Structured Online Test series platform</p>
