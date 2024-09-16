@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import toast from "react-hot-toast";
+import API_BASE_URL from "../config";
 
 const LoginForm = ({ onClose ,onLoginSuccess}) => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
 
   try{
     const response = await axios.post(
-      "http://localhost:5000/api/user/loginUser",
+      `${API_BASE_URL}/user/loginUser`,
       {mobile,password}
     );
 
