@@ -7,6 +7,8 @@ import CurrentAffairs from './components/CurrentAffairs';
 import TestSeries from './components/TestSeries';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import LiveClasses from './components/LiveClasses';
+import UPSCLiveClass from './components/LIveClasses/UPSCLiveClass';
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           {/* <Route path='/home' element={<Home />} /> */}
           <Route path='/testseries' element={<TestSeries />} />
           <Route path='/livecourse' element={<LiveCourse />} />
+          <Route path='/live-class' element={<UPSCLiveClass />} />
           <Route path='/currentaffairs' element={<CurrentAffairs />} />
           <Route path='/blog' element={<Blog />} />
         </Routes>
