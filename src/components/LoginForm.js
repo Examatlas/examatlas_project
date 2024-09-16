@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const LoginForm = ({ onClose }) => {
+const LoginForm = ({ onClose ,onLoginSuccess}) => {
   const [formData, setFormData] = useState({
     mobile: "",
     password: "",
@@ -14,10 +16,36 @@ const LoginForm = ({ onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const{mobile,password} = formData
     console.log("Login submitted:", formData);
-  };
+
+  try{
+    const response = await axios.post(
+      "http://localhost:5000/api/user/loginUser",
+      {mobile,password}
+    );
+
+    const token = response.data.data;
+    localStorage.setItem('token',token)
+
+    onLoginSuccess();
+
+    toast.success(response.data.message);
+
+    setFormData({
+      mobile:"",
+      password:""
+    });
+
+    onClose()
+
+  }catch(error){
+    console.log(error.message)
+    toast.error(error.response?.data?.message)
+  }
+}
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
@@ -70,3 +98,4 @@ const LoginForm = ({ onClose }) => {
 };
 
 export default LoginForm;
+

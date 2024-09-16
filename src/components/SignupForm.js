@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import axios from "axios";
+import { toast } from 'react-hot-toast';
 
 const SignupForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     mobile: "",
-    course: "",
     password: "",
     confirmPassword: "",
   });
@@ -18,25 +19,51 @@ const SignupForm = ({ onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    const { name, email, mobile, password, confirmPassword } = formData;
+    
+    if (password !== confirmPassword) {
+      toast.error("Password do not match with confirm password!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/user/createUser",
+        { name, email, mobile, password, confirmPassword }
+      );
+      toast.success(response.data.message);
+
+    
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      onClose();
+
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden overflow-x-hidden ">
+    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden">
       <div className="bg-white p-6 rounded-md shadow-lg w-96 h-[600px] relative">
         <IoMdClose
           className="absolute top-6 right-5 text-gray-700 cursor-pointer"
           size={24}
           onClick={onClose}
         />
-        <h2 className="text-2xl font-semibold mb-4">Signup</h2><br/>
+        <h2 className="text-2xl font-semibold mb-4">Signup</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Name <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-gray-700">Name <span className="text-red-500">*</span></label>
             <input
               type="text"
               name="name"
@@ -44,13 +71,11 @@ const SignupForm = ({ onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md mb-1"
               required
-              placeholder="enter name"
+              placeholder="Enter name"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Email <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-gray-700">Email <span className="text-red-500">*</span></label>
             <input
               type="email"
               name="email"
@@ -58,13 +83,11 @@ const SignupForm = ({ onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md mb-1"
               required
-              placeholder="enter email"
+              placeholder="Enter email"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Mobile <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-gray-700">Mobile <span className="text-red-500">*</span></label>
             <input
               type="number"
               name="mobile"
@@ -72,14 +95,11 @@ const SignupForm = ({ onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md mb-1"
               required
-              placeholder="enter mobile number"
+              placeholder="Enter mobile number"
             />
           </div>
-          
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Password <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-gray-700">Password <span className="text-red-500">*</span></label>
             <input
               type="password"
               name="password"
@@ -87,13 +107,11 @@ const SignupForm = ({ onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md mb-1"
               required
-              placeholder="enter password"
+              placeholder="Enter password"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Confirm Password <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-gray-700">Confirm Password <span className="text-red-500">*</span></label>
             <input
               type="password"
               name="confirmPassword"
@@ -101,12 +119,12 @@ const SignupForm = ({ onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md mb-2"
               required
-              placeholder="enter confirm password"
+              placeholder="Confirm password"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-3 font-semibold rounded-md hover:bg-blue-400 "
+            className="w-full bg-blue-500 text-white p-3 font-semibold rounded-md hover:bg-blue-400"
           >
             Signup
           </button>
@@ -117,5 +135,4 @@ const SignupForm = ({ onClose }) => {
 };
 
 export default SignupForm;
-
 
