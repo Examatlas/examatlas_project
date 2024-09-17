@@ -12,6 +12,7 @@ import {Toaster} from 'react-hot-toast';
 function App() {
   return (
     <>
+
       <Router>
         <Toaster/>
         <Header />
@@ -22,10 +23,10 @@ function App() {
           <Route path='/livecourse' element={<LiveCourse />} />
           <Route path='/currentaffairs' element={<CurrentAffairs />} />
           <Route path='/blog' element={<Blog />} />
+
         </Routes>
         <Footer />
       </Router>
-
     </>
   );
 }
