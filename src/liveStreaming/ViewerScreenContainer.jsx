@@ -56,9 +56,6 @@ const HLSPlayer = () => {
 // const ViewerScreenContainer = ({ meetingId }) => {
 const ViewerScreenContainer = () => {
   const { meetingId } = useParams();
-  console.log(meetingId);
-  console.log(authToken);
-  
   
   return (
     <>
