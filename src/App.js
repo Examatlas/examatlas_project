@@ -27,7 +27,6 @@ function App() {
           <Route path='/livecourse/upsc-live-class/:meetingId' element={<ViewerScreenContainer />} />
           <Route path='/currentaffairs' element={<CurrentAffairs />} />
           <Route path='/blog' element={<Blog />} />
-
         </Routes>
         <Footer />
       </Router>
