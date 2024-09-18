@@ -15,12 +15,7 @@ import ViewerScreenContainer from "./liveStreaming/ViewerScreenContainer";
 
 // import { UserProvider } from './Auth/UserContext';
 
-import { Toaster } from "react-hot-toast";
-import UPSCLiveClass from "./components/LiveClasses/UPSCLiveClasses";
-import ViewerScreenContainer from "./liveStreaming/ViewerScreenContainer";
-
-
-import { UserProvider } from "./Auth/UserContext";
+// import { UserProvider } from "./Auth/UserContext";
 
 function App() {
   return (
