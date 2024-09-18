@@ -12,23 +12,23 @@ import {Toaster} from 'react-hot-toast';
 import UPSCLiveClass from './components/LiveClasses/UPSCLiveClasses';
 import ViewerScreenContainer from './liveStreaming/ViewerScreenContainer';
 
-import { UserProvider } from './Auth/UserContext';
+// import { UserProvider } from './Auth/UserContext';
 
 
 function App() {
   return (
     <>
-      <UserProvider>
-        <Router>
+      {/* <UserProvider> */}
+        {/* <Router>
           <Toaster />
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />
             {/* <Route path='/home' element={<Home />} /> */}
-            <Route path='/testseries' element={<TestSeries />} />
+            {/* <Route path='/testseries' element={<TestSeries />} />
             <Route path='/livecourse' element={<LiveCourse />} />
             <Route path='/currentaffairs' element={<CurrentAffairs />} />
-            <Route path='/blog' element={<Blog />} />
+            <Route path='/blog' element={<Blog />} />  */}
 
 
       <Router>
@@ -47,11 +47,11 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-
+{/* 
           </Routes>
           <Footer />
-        </Router>
-      </UserProvider>
+        </Router> */}
+      {/* </UserProvider> */}
 
     </>
   );

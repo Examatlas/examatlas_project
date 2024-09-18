@@ -1,11 +1,11 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect  } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
-import UserContext from "../Auth/UserContext";
+// import UserContext from "../Auth/UserContext";
 
 const Header = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -13,7 +13,7 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { name } = useContext(UserContext);
+  // const { name } = useContext(UserContext);
 
   const { pathname } = useLocation();
 
@@ -120,7 +120,7 @@ const Header = () => {
                 className="px-6 py-2 flex border border-red-400 bg-red-500 hover:bg-red-400 text-white rounded-lg w-fit cursor-pointer"
                 onClick={handleLogout}
               >
-                Logout {name}
+                Logout 
               </p>
             ) : (
               <>

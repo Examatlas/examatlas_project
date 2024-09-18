@@ -1,37 +1,24 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import axios from "axios";
+import API_BASE_URL from "../config";
+
 const RecentCurrentAffairs = () => {
-    const data = [
-        {
-            id: 6,
-            headline: "Common Mistakes to Avoid for a Successful SEBI Grade A 2024 Exam",
-            date: "Apr 3, 2024",
-            image: "https://anujjindal.in/wp-content/uploads/2024/05/Step-by-step-guide-to-boost-your-GA-prep-of-RBI-Grade-B.jpg"
-        },
-        {
-            id: 7,
-            headline: "Utilizing ChatGPT to Enhance Your Preparation for RBI 2024 Exam",
-            date: "Mar 29, 2024",
-            image: "https://anujjindal.in/wp-content/uploads/2024/04/5-Common-Mistakes-to-avoid-for-SEBI.jpg"
-        },
-        {
-            id: 8,
-            headline: "Insightful Preparation Tips to Excel in SEBI Grade A 2024 Exam",
-            date: "Mar 22, 2024",
-            image: "https://anujjindal.in/wp-content/uploads/2024/03/5-Ways-to-use-ChatGPT-to-speed-up-RBI-2024-preparation.jpg"
-        },
-        {
-            id: 9,
-            headline: "How to Overcome Exam Failure and Achieve Success in RBI Grade B",
-            date: "Mar 1, 2024",
-            image: "https://anujjindal.in/wp-content/uploads/2024/03/Insightful-Prep-Tips-to-check-for-SEBI-Grade-A-exam-2024.jpg"
-        },
-        {
-            id: 10,
-            headline: "Comparing UPSC CSE and RBI Exams: Making the Right Career Choice",
-            date: "Feb 26, 2024",
-            image: "https://anujjindal.in/wp-content/uploads/2024/02/The-right-career-choice-Exploring-Similarities-in-UPSC-CSE-and-RBI-Exam-1080x675.png"
-        },
-    ];
+    const [CurrentAffairData, setCurrentAffairData] = useState([]);
+
+    const fetchAllCurrentAffairs = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/currentAffair/getAllCA`);
+        setCurrentAffairData(response?.data?.currentAffairs);
+      } catch (error) {
+        console.log("Error when fetching currentAffairs", error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchAllCurrentAffairs();
+    }, []);
+
+    
 
     return (
         <>
@@ -39,21 +26,21 @@ const RecentCurrentAffairs = () => {
                 <div className=" w-[90%] md:w-[700px] mx-auto lg:ml-20">
                     <h1 className=" text-xl md:text-3xl text-blue-700 font-extrabold ">Recent Current Affairs</h1>
 
-                    {data.map((item, index) => (
-                        <div key={item.id} className="pt-7">
+                    {CurrentAffairData.map((item, index) => (
+                        <div key={index} className="pt-7">
                             <div className="flex">
                                 <p className="text-gray-800 font-bold">
-                                    {item.headline}
+                                    {item.title}
                                     <br />
                                     <br />
-                                    <span className="text-gray-600 font-normal">{item.date}</span>
+                                    <span className="text-gray-600 font-normal">{item.keyword}</span>
                                 </p>
                                 <img
                                     src={item.image}
                                     className="w-[200px] object-cover h-[112px] ml-9 rounded-lg"
                                 />
                             </div>
-                            {index < data.length - 1 && (
+                            {index < item.length - 1 && (
                                 <hr className="w-[90%] md:w-[720px] border-gray-300 mt-4" />
                             )}
                         </div>
