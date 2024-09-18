@@ -19,7 +19,7 @@ function App() {
     <>
       <UserProvider>
         <Router>
-          <Toaster />''
+          <Toaster />
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
