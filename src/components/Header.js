@@ -1,11 +1,11 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
-// import UserContext from "../Auth/UserContext";
+import { AuthContext } from "../Auth/UserContext";
 
 const Header = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -13,7 +13,8 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const { name } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
+  console.log(user, "user")
 
   const { pathname } = useLocation();
 
@@ -52,6 +53,9 @@ const Header = () => {
 
   return (
     <>
+
+
+
       <div className="bg-blue-100 flex justify-between w-[100vw] z-10 fixed top-0 px-10 lg:px-[5rem] py-4">
         <img
           src="https://examatlas.com/assets/images/logo.png"
@@ -59,26 +63,29 @@ const Header = () => {
           className=" w-36 h-14"
         />
         <div
-          className={`${
-            toggleMenu ? "top-20 lg:top-0" : "-top-[100vh] lg:top-0"
-          } fixed lg:relative flex lg:flex-row justify-center lg:justify-between items-center left-0 w-[100vw] lg:w-fit mr-5 h-[90vh] lg:h-auto bg-blue-100 font-semibold duration-500`}
+          className={`${toggleMenu ? "top-20 lg:top-0" : "-top-[100vh] lg:top-0"
+            } fixed lg:relative flex lg:flex-row justify-center lg:justify-between items-center left-0 w-[100vw] lg:w-fit mr-5 h-[90vh] lg:h-auto bg-blue-100 font-semibold duration-500`}
         >
           <div className="flex flex-col lg:flex-row justify-center lg:justify-end items-center gap-5 h-full">
             <Link
               to={"/"}
-              className={`${
-                pathname === "/" ? "text-blue-400 font-bold" : ""
-              }  text-lg lg:text-sm cursor-pointer`}
+              className={`${pathname === "/" ? "text-blue-400 font-bold" : ""
+                }  text-lg lg:text-sm cursor-pointer`}
               onClick={toggleHambergerMenu}
             >
               HOME
             </Link>
 
+            {/* {user ? (
+        <h1 className="text-3xl font-bold">Welcome, {user?.data?.name}!</h1>
+      ) : (
+        <h1 className="text-3xl font-bold">Loading...</h1>
+      )} */}
+
             <Link
               to={"/testseries"}
-              className={`${
-                pathname === "/testseries" ? "text-blue-400 font-bold" : ""
-              }  flex text-lg lg:text-sm cursor-pointer`}
+              className={`${pathname === "/testseries" ? "text-blue-400 font-bold" : ""
+                }  flex text-lg lg:text-sm cursor-pointer`}
               onClick={toggleHambergerMenu}
             >
               TEST SERIES{" "}
@@ -87,9 +94,8 @@ const Header = () => {
 
             <Link
               to={"/livecourse"}
-              className={`${
-                pathname === "/livecourse" ? "text-blue-400 font-bold" : ""
-              }  text-lg lg:text-sm cursor-pointer`}
+              className={`${pathname === "/livecourse" ? "text-blue-400 font-bold" : ""
+                }  text-lg lg:text-sm cursor-pointer`}
               onClick={toggleHambergerMenu}
             >
               LIVE COURSES
@@ -97,9 +103,8 @@ const Header = () => {
 
             <Link
               to={"/currentaffairs"}
-              className={`${
-                pathname === "/currentaffairs" ? "text-blue-400 font-bold" : ""
-              }  text-lg lg:text-sm cursor-pointer`}
+              className={`${pathname === "/currentaffairs" ? "text-blue-400 font-bold" : ""
+                }  text-lg lg:text-sm cursor-pointer`}
               onClick={toggleHambergerMenu}
             >
               CURRENT AFFAIRS
@@ -107,36 +112,49 @@ const Header = () => {
 
             <Link
               to={"/blog"}
-              className={`${
-                pathname === "/blog" ? "text-blue-400 font-bold" : ""
-              }  text-lg lg:text-sm cursor-pointer`}
+              className={`${pathname === "/blog" ? "text-blue-400 font-bold" : ""
+                }  text-lg lg:text-sm cursor-pointer`}
               onClick={toggleHambergerMenu}
             >
               BLOG
             </Link>
 
             {isLoggedIn ? (
-              <p
-                className="px-6 py-2 flex border border-red-400 bg-red-500 hover:bg-red-400 text-white rounded-lg w-fit cursor-pointer"
-                onClick={handleLogout}
-              >
-                Logout 
-              </p>
-            ) : (
               <>
+                {user ? (
+                  <div className="flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full">
+                      <span className="text-xl font-bold text-white">
+                        {user?.data?.name?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <h1 >Loading...</h1>
+                )}
+
                 <p
-                  className="px-4 py-2 flex bg-blue-500 text-white rounded-lg w-fit hover:bg-blue-400 cursor-pointer"
-                  onClick={toggleSignup}
+                  className="px-6 py-2 flex border border-red-400 bg-red-500 hover:bg-red-400 text-white rounded-lg w-fit cursor-pointer"
+                  onClick={handleLogout}
                 >
-                  Register
-                </p>
-                <p
-                  className="px-6 py-2 flex border border-blue-400 hover:bg-blue-200 rounded-lg w-fit text-black cursor-pointer"
-                  onClick={toggleLogin}
-                >
-                  Login
+                  Logout
                 </p>
               </>
+            ) : (
+            <>
+              <p
+                className="px-4 py-2 flex bg-blue-500 text-white rounded-lg w-fit hover:bg-blue-400 cursor-pointer"
+                onClick={toggleSignup}
+              >
+                Register
+              </p>
+              <p
+                className="px-6 py-2 flex border border-blue-400 hover:bg-blue-200 rounded-lg w-fit text-black cursor-pointer"
+                onClick={toggleLogin}
+              >
+                Login
+              </p>
+            </>
             )}
           </div>
         </div>

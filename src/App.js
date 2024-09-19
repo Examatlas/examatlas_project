@@ -8,31 +8,16 @@ import TestSeries from "./components/TestSeries";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-
 import { Toaster } from "react-hot-toast";
 import UPSCLiveClass from "./components/LiveClasses/UPSCLiveClasses";
 import ViewerScreenContainer from "./liveStreaming/ViewerScreenContainer";
 
-// import { UserProvider } from './Auth/UserContext';
-
-// import { UserProvider } from "./Auth/UserContext";
+import { AuthProvider } from './Auth/UserContext';
 
 function App() {
   return (
     <>
-      {/* <UserProvider> */}
-        {/* <Router>
-          <Toaster />
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {/* <Route path='/home' element={<Home />} /> */}
-
-            {/* <Route path='/testseries' element={<TestSeries />} />
-            <Route path='/livecourse' element={<LiveCourse />} />
-            <Route path='/currentaffairs' element={<CurrentAffairs />} />
-            <Route path='/blog' element={<Blog />} />  */}
-
+     <AuthProvider>
 
       <Router>
         <Toaster/>
@@ -50,30 +35,8 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-{/* 
-          </Routes>
-          <Footer />
-        </Router> */}
-      {/* </UserProvider> */}
 
-
-            {/* <Route path="/testseries" element={<TestSeries />} />
-            <Route path="/livecourse" element={<LiveCourse />} />
-            <Route
-              path="/livecourse/upsc-live-class"
-              element={<UPSCLiveClass />}
-            />
-            <Route
-              path="/livecourse/upsc-live-class/:meetingId"
-              element={<ViewerScreenContainer />}
-            />
-            <Route path="/currentaffairs" element={<CurrentAffairs />} />
-            <Route path="/blog" element={<Blog />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </UserProvider> */}
-
+      </AuthProvider>
     </>
   );
 }

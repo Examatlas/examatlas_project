@@ -1,51 +1,54 @@
-// import React, { createContext, useState, useEffect } from 'react';
-// import axios from 'axios';
+// AuthContext.js
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';  // Import jwt-decode
+import API_BASE_URL from '../config';
 
-// const UserContext = createContext();
+export const AuthContext = createContext();
 
-// export const UserProvider = ({ children,id }) => {
-//   const [name, setName] = useState('');
-//   const [error, setError] = useState(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
 
-//   useEffect(() => {
-//     let isMounted = true;
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId')
+  
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          console.log("Decoded Token:", decodedToken);  // Log the entire decoded token
+          
+          // const userId = decodedToken?.userId || decodedToken?._id; 
+          console.log("userId is ",userId)
+  
+          const response = await axios.get(`${API_BASE_URL}/user/getUserById/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-//     const fetchUserName = async () => {
-//       try {
-//         const response = await axios.get(`http://localhost:5000/api/user/get/${id}`);
-        
-//         if (response.data && response.data.name) {
-//           if (isMounted) {
-//             setName(response.data.name);
-//           }
-//         } else {
-//           console.error('Name not found in response:', response.data);
-//           setError('Name not found in response');
-//         }
-//       } catch (error) {
-//         console.error('Error fetching user data:', error.message);
-//         if (isMounted) {
-//           if (error.response && error.response.status === 404) {
-//             setError('User not found');
-//           } else {
-//             setError('Error fetching user data');
-//           }
-//         }
-//       }
-//     };
+          console.log(response,"response")
+  
 
-//     fetchUserName();
-
-//     return () => {
-//       isMounted = false;
-//     };
-//   }, [id]);
-
-//   return (
-//     <UserContext.Provider value={{ name, error }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// };
-
-// export default UserContext;
+          if (response.data) {
+            setUser(response.data);
+          } else {
+            console.error("No data received from the API");
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+  
+    fetchUser();
+  }, []);
+  
+  
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

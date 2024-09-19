@@ -27,9 +27,13 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
       `${API_BASE_URL}/user/loginUser`,
       {mobile,password}
     );
+    
+console.log(response.data)
+    const token = response.data.token;
+    const userId = response.data.userId;
 
-    const token = response.data.data;
     localStorage.setItem('token',token)
+    localStorage.setItem('userId',userId)
 
     onLoginSuccess();
 

@@ -20,6 +20,9 @@ const Blog = () => {
     fetchAllBlogs();
   }, []);
 
+
+  
+
   return (
     <>
       {blogData.length > 0 && (
