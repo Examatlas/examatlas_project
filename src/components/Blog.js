@@ -20,6 +20,9 @@ const Blog = () => {
     fetchAllBlogs();
   }, []);
 
+
+  
+
   return (
     <>
       {blogData.length > 0 && (
@@ -27,8 +30,8 @@ const Blog = () => {
           <div className="lg:w-[850px] px-2 xl:pl-44">
             <h1 className="text-3xl text-blue-700 font-extrabold">Latest Blogs</h1>
             <img
-            //   src={blogData[0].image}
-              src="https://anujjindal.in/wp-content/uploads/2024/08/WVfGiOlZgYQ-SD.jpg"
+              src={blogData[0].image}
+              // src="https://anujjindal.in/wp-content/uploads/2024/08/WVfGiOlZgYQ-SD.jpg"
               className="rounded-lg mt-10 lg:w-[900px] h-[5rem] xl:h-[380px] object-cover"
               alt="Latest Blog"
             />

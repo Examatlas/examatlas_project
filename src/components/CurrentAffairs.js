@@ -28,8 +28,8 @@ const CurrentAffairs = () => {
               Latest Current Affairs
             </h1>
             <img
-            //   src={CurrentAffairData[0].image} 
-            src="https://anujjindal.in/wp-content/uploads/2024/08/WVfGiOlZgYQ-SD.jpg"
+              src={CurrentAffairData[0].image} 
+            // src="https://anujjindal.in/wp-content/uploads/2024/08/WVfGiOlZgYQ-SD.jpg"
 
               className="rounded-lg mt-10 w-[900px] h-[380px] object-cover"
               alt="Current Affair"
