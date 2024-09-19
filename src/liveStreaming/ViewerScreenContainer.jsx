@@ -9,6 +9,7 @@ import Hls from "hls.js";
 //   import { authToken } from "../api";
 import { authToken } from "./Api";
 import { useParams } from "react-router-dom";
+import Loading from "../loading/Loading";
 
 const HLSPlayer = () => {
   const { hlsUrls, hlsState } = useMeeting();
@@ -45,7 +46,7 @@ const HLSPlayer = () => {
       id="hlsPlayer"
       autoPlay
       controls
-      style={{ width: "70%", height: "70%" }}
+      style={{ width: "100%", height: "100%" }}
       playsInline
       playing
       onError={(err) => console.log(err, "hls video error")}
@@ -56,28 +57,31 @@ const HLSPlayer = () => {
 // const ViewerScreenContainer = ({ meetingId }) => {
 const ViewerScreenContainer = () => {
   const { meetingId } = useParams();
-  
+
   return (
     <>
-    <div className="mt-[10rem] mx-[5rem]">
-      <MeetingProvider
-        token={authToken}
-        // config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
-        config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
-        joinWithoutUserInteraction
-      >
-        <MeetingConsumer>
-          {({ hlsState }) =>
-            hlsState === Constants.hlsEvents.HLS_PLAYABLE ? (
-              <HLSPlayer />
-            ) : (
-              <p>Waiting for host to start stream...</p>
-            )
-          }
-        </MeetingConsumer>
-      </MeetingProvider>
-    </div>
-      
+      <div className="mt-[8rem] border  shadow-sm rounded-md flex justify-center items-center bg-blue-50 h-[30rem] my-[2rem] mx-[5rem]">
+        <MeetingProvider
+          token={authToken}
+          // config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
+          config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
+          joinWithoutUserInteraction
+        >
+          <MeetingConsumer>
+            {({ hlsState }) =>
+              hlsState === Constants.hlsEvents.HLS_PLAYABLE ? (
+                <HLSPlayer />
+              ) : (
+                <div>
+                  <p className="text-center">Waiting for host to start stream...</p>
+                  <Loading />
+                </div>
+              )
+            }
+          </MeetingConsumer>
+        </MeetingProvider>
+      </div>
+
     </>
 
   );
