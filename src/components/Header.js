@@ -2,16 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
-import { AuthContext } from "../Auth/UserContext";
+import { AuthContext } from "../Auth/AuthContext";
 
 const Header = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
   console.log(user, "user")
@@ -51,10 +53,11 @@ const Header = () => {
     setIsLoginOpen(false);  // Close the login form after success
   };
 
+
+
+
   return (
     <>
-
-
 
       <div className="bg-blue-100 flex justify-between w-[100vw] z-10 fixed top-0 px-10 lg:px-[5rem] py-4">
         <img
@@ -151,6 +154,7 @@ const Header = () => {
               <p
                 className="px-6 py-2 flex border border-blue-400 hover:bg-blue-200 rounded-lg w-fit text-black cursor-pointer"
                 onClick={toggleLogin}
+                // onClick={() => { toggleLogin(); goLoginForm(); }}
               >
                 Login
               </p>
