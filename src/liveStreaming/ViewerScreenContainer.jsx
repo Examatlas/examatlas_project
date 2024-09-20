@@ -10,6 +10,7 @@ import Hls from "hls.js";
 import { authToken } from "./Api";
 import { useParams } from "react-router-dom";
 import Loading from "../loading/Loading";
+import ChatView from "./ChatView";
 
 const HLSPlayer = () => {
   const { hlsUrls, hlsState } = useMeeting();
@@ -60,14 +61,15 @@ const ViewerScreenContainer = () => {
 
   return (
     <>
-      <div className="mt-[8rem] border  shadow-sm rounded-md flex justify-center items-center bg-blue-50 h-[30rem] my-[2rem] mx-[5rem]">
+      <div className="flex w-full justify-between mt-[8rem] my-[2rem]">
         <MeetingProvider
           token={authToken}
           // config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
           config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
           joinWithoutUserInteraction
         >
-          <MeetingConsumer>
+          <div className=" border shadow-sm rounded-md flex justify-center items-center bg-blue-50 w-[100%] h-[30rem] mx-[1rem]">
+             <MeetingConsumer>
             {({ hlsState }) =>
               hlsState === Constants.hlsEvents.HLS_PLAYABLE ? (
                 <HLSPlayer />
@@ -79,6 +81,11 @@ const ViewerScreenContainer = () => {
               )
             }
           </MeetingConsumer>
+          </div>
+         
+          <div className="border shadow-sm rounded-md flex justify-center items-center bg-blue-50 h-[30rem] mr-[1rem]">
+            <ChatView/>
+          </div>
         </MeetingProvider>
       </div>
 
