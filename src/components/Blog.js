@@ -2,27 +2,42 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import API_BASE_URL from "../config";
 import RecentBlog from "./RecentBlog";
+import BlogLoading from "../loading/BlogLoading";
 
 const Blog = () => {
-  const [blogData, setBlogData] = useState([]); // Initialize as an empty array
-
+  const [blogData, setBlogData] = useState([]); 
+  const [loading,setLoading]=useState(true);
   // Fetch all blogs
   const fetchAllBlogs = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/blog/getAllBlogs`);
-      setBlogData(response?.data?.blogs || []); // Ensure that data is set as an array
+      setBlogData(response?.data?.blogs || []); 
+      setLoading(false);
     } catch (error) {
       console.log("Error when fetching blogs", error);
     }
   };
 
   useEffect(() => {
-    fetchAllBlogs();
+    setTimeout(()=>{
+      fetchAllBlogs();
+    },2000);
   }, []);
 
-
+  if(loading){
+    return( 
+    <div className="grid grid-cols-4 mx-[5rem] mt-28 gap-4">
+      <BlogLoading/>
+      <BlogLoading/>
+      <BlogLoading/>
+      <BlogLoading/>
+      <BlogLoading/>
+      <BlogLoading/>
+      <BlogLoading/>
+      <BlogLoading/>
+    </div>)
+  }
   
-
   return (
     <>
       {blogData.length > 0 && (
