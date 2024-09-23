@@ -2,22 +2,42 @@ import React, { useEffect, useState } from "react";
 import RecentCurrentAffairs from "./RecentCurrentAffairs";
 import API_BASE_URL from "../config";
 import axios from "axios";
+import BlogLoading from "../loading/BlogLoading";
 
 const CurrentAffairs = () => {
   const [CurrentAffairData, setCurrentAffairData] = useState([]);
+  const [loading,setLoading]=useState(true);
 
   const fetchAllCurrentAffairs = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/currentAffair/getAllCA`);
       setCurrentAffairData(response?.data?.currentAffairs);
+      setLoading(false);
     } catch (error) {
       console.log("Error when fetching currentAffairs", error);
     }
   };
 
   useEffect(() => {
-    fetchAllCurrentAffairs();
+    setTimeout(()=>{
+      fetchAllCurrentAffairs();
+    },1000);
   }, []);
+
+  if(loading){
+    return(
+      <div className="grid grid-cols-4 mx-[5rem] mt-28 gap-4">
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+      </div>
+    )
+  }
 
   return (
     <>

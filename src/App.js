@@ -13,39 +13,49 @@ import UPSCLiveClass from "./components/LiveClasses/UPSCLiveClasses";
 import ViewerScreenContainer from "./liveStreaming/ViewerScreenContainer";
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
+
 import { AuthProvider } from './Auth/AuthContext';
 import EmailBox from "./components/EmailBox";
+
+// import { AuthProvider } from "./Auth/AuthContext";
+
 
 function App() {
   return (
     <>
       <AuthProvider>
-
         <Router>
           <Toaster />
           <Header />
           <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+
 
             <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />} />
           
             <Route path='/emailbox' element={<EmailBox/>}/>
+
+            <Route
+              path="/livecourse/upsc-live-class"
+              element={<UPSCLiveClass />}
+            />
+            <Route
+              path="/livecourse/upsc-live-class/:meetingId"
+              element={<ViewerScreenContainer />}
+            />
+            <Route path="/currentaffairs" element={<CurrentAffairs />} />
+            <Route path="/blog" element={<Blog />} />
+
             <Route element={<ProtectedRoute />}>
-
-              <Route path='/testseries' element={<TestSeries />} />
-              <Route path='/livecourse' element={<LiveCourse />} />
-              <Route path='/livecourse/upsc-live-class' element={<UPSCLiveClass />} />
-              <Route path='/livecourse/upsc-live-class/:meetingId' element={<ViewerScreenContainer />} />
-              <Route path='/currentaffairs' element={<CurrentAffairs />} />
-              <Route path='/blog' element={<Blog />} />
-
+              <Route path="/testseries" element={<TestSeries />} />
+              <Route path="/livecourse" element={<LiveCourse />} />
             </Route>
-
           </Routes>
           <Footer />
          
         </Router>
-
       </AuthProvider>
     </>
   );
