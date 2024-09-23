@@ -17,7 +17,7 @@ import ProtectedRoute from "./Auth/ProtectedRoute";
 import { AuthProvider } from './Auth/AuthContext';
 import EmailBox from "./components/EmailBox";
 
-// import { AuthProvider } from "./Auth/AuthContext";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 
 
 function App() {
@@ -30,7 +30,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-
+            
+            <Route path="/examAtlas/reset-password-token" element={<ResetPasswordForm />} />
 
             <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />} />

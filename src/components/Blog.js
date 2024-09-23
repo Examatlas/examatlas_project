@@ -24,8 +24,21 @@ const Blog = () => {
     },2000);
   }, []);
 
+  if(loading){
+    return(
+      <div className="grid grid-cols-4 mx-[5rem] mt-28 gap-4">
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+        <BlogLoading/>
+      </div>
+    )
+  }
 
-  
 
   return (
     <>

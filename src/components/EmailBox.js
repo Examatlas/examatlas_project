@@ -1,19 +1,36 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast"; // Assuming you're using react-hot-toast for notifications
 
 const EmailBox = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setEmail(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateEmail(email)) {
             setError('');
-            console.log("Valid email:", email);
-           
+            try {
+                setLoading(true);
+                const response = await axios.post("http://localhost:5000/api/user/forgotpassword", { email });
+                
+                if (response.data.status) {
+                    toast.success("Password reset link sent. Please check your email.");
+                    
+                } else {
+                    toast.error(response.data.message);
+                }
+                setEmail('')
+            } catch (error) {
+                toast.error("Something went wrong. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
         } else {
             setError('Please enter a valid email address.');
         }
@@ -36,16 +53,17 @@ const EmailBox = () => {
                     id="email"
                     value={email}
                     onChange={handleChange}
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                    className="w-full  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
                     placeholder="Enter your email"
                     required
                 />
                 {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                 <button
                     type="submit"
-                    className="w-full mt-4 bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                    className={`w-full mt-3 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 h-12 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    disabled={loading}
                 >
-                    Submit
+                    {loading ? "Submitting..." : "Submit"}
                 </button>
             </form>
         </div>
