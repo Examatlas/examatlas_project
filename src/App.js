@@ -14,6 +14,7 @@ import ViewerScreenContainer from "./liveStreaming/ViewerScreenContainer";
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
 import { AuthProvider } from './Auth/AuthContext';
+import EmailBox from "./components/EmailBox";
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
 
             <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />} />
-
+          
+            <Route path='/emailbox' element={<EmailBox/>}/>
             <Route element={<ProtectedRoute />}>
 
               <Route path='/testseries' element={<TestSeries />} />
@@ -41,6 +43,7 @@ function App() {
 
           </Routes>
           <Footer />
+         
         </Router>
 
       </AuthProvider>

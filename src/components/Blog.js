@@ -21,8 +21,6 @@ const Blog = () => {
   }, []);
 
 
-  
-
   return (
     <>
       {blogData.length > 0 && (

@@ -19,7 +19,6 @@ const UPSCLiveClass = () => {
     getAllLiveClass();
   }, []);
 
-
   return (
     <div className='mt-[6rem] mx-[5rem]'>
       <h1 className='mt-10 text-3xl'>UPSC LIVE CLASS</h1>

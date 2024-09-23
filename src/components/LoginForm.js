@@ -3,12 +3,15 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import toast from "react-hot-toast";
 import API_BASE_URL from "../config";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({ onClose ,onLoginSuccess}) => {
   const [formData, setFormData] = useState({
     mobile: "",
     password: "",
   });
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({
@@ -52,9 +55,14 @@ console.log(response.data)
   }
 }
 
+const handleEmail = () =>{
+  navigate("/emailbox")
+  onClose()
+}
+
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-md shadow-lg w-96 h-[360px]  relative">
+      <div className="bg-white p-6 rounded-md shadow-lg w-96 h-[380px]  relative">
         <IoMdClose
           className="absolute top-5 right-5 text-gray-700 cursor-pointer"
           size={24}
@@ -96,6 +104,7 @@ console.log(response.data)
           >
             Login
           </button>
+          <p className="font-semibold text-center mt-4 cursor-pointer" onClick={handleEmail}>Forgot Password</p>
         </form>
       </div>
     </div>

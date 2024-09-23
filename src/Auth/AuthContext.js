@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
 
           console.log(response,"response")
   
-
           if (response.data) {
             setUser(response.data);
           } else {
