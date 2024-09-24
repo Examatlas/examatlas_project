@@ -125,8 +125,8 @@ const Header = () => {
               <>
                 {user ? (
                   <div className="flex items-center justify-center">
-                    <div className="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full">
-                      <span className="text-xl font-bold text-white">
+                    <div className="w-8 h-8 flex items-center justify-center bg-blue-500 rounded-full">
+                      <span className="text-xl font-semibold text-white">
                         {user?.data?.name?.charAt(0).toUpperCase()}
                       </span>
                     </div>
