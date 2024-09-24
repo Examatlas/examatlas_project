@@ -49,6 +49,7 @@ const HLSPlayer = () => {
       controls
       style={{ width: "100%", height: "100%" }}
       playsInline
+      height={"100%"}
       playing
       onError={(err) => console.log(err, "hls video error")}
     ></video>
