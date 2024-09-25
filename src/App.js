@@ -18,6 +18,7 @@ import { AuthProvider } from './Auth/AuthContext';
 import EmailBox from "./components/EmailBox";
 
 import ResetPasswordForm from "./components/ResetPasswordForm";
+import Book from "./components/Book/Book";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
             />
             <Route path="/currentaffairs" element={<CurrentAffairs />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/book" element={<Book />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="/testseries" element={<TestSeries />} />

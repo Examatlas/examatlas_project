@@ -121,6 +121,15 @@ const Header = () => {
               BLOG
             </Link>
 
+            <Link
+              to={"/book"}
+              className={`${pathname === "/book" ? "text-blue-400 font-bold" : ""
+                }  text-lg lg:text-sm cursor-pointer`}
+              onClick={toggleHambergerMenu}
+            >
+              BOOK
+            </Link>
+
             {isLoggedIn ? (
               <>
                 {user ? (
