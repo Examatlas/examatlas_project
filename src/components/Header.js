@@ -7,6 +7,7 @@ import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../Auth/AuthContext";
 import logo from "../images/logo.png";
+import ex2 from "../images/ex2.png"
 
 const Header = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -60,7 +61,7 @@ const Header = () => {
       <div className="bg-blue-100 flex justify-between w-[100vw] z-10 fixed top-0 px-10 lg:px-[5rem] py-4">
         <img
           // src="https://examatlas.com/assets/images/logo.png"
-          src={logo}
+          src={ex2}
           alt="Example Image"
           className=" w-36 h-14"
         />

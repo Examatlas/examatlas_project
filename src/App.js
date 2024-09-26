@@ -19,6 +19,10 @@ import EmailBox from "./components/EmailBox";
 
 import ResetPasswordForm from "./components/ResetPasswordForm";
 import Book from "./components/Book/Book";
+import Wishlist from "./components/Book/Wishlist";
+import Cart from "./components/Book/Cart";
+
+
 
 
 function App() {
@@ -39,6 +43,7 @@ function App() {
           
             <Route path='/emailbox' element={<EmailBox/>}/>
 
+           
             <Route
               path="/livecourse/upsc-live-class"
               element={<UPSCLiveClass />}
@@ -49,7 +54,12 @@ function App() {
             />
             <Route path="/currentaffairs" element={<CurrentAffairs />} />
             <Route path="/blog" element={<Blog />} />
+
+
             <Route path="/book" element={<Book />} />
+            <Route path="/ecommerce/wishlist" element={<Wishlist/>}/>
+            <Route path="/ecommerce/cart" element={<Cart/>}/>
+
 
             <Route element={<ProtectedRoute />}>
               <Route path="/testseries" element={<TestSeries />} />

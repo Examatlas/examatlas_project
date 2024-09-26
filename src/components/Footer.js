@@ -4,6 +4,7 @@ import { TiSocialFacebook } from "react-icons/ti";
 import { RxTwitterLogo } from "react-icons/rx";
 import { RiYoutubeLine } from "react-icons/ri";
 import { FaLinkedinIn } from "react-icons/fa6";
+import ex2 from "../images/ex2.png"
 
 const Footer = () => {
   return (
@@ -13,7 +14,7 @@ const Footer = () => {
           <div>
             {/* <h1 className="text-3xl font-bold text-white">ExamAtlas</h1> */}
             <img
-              src="https://examatlas.com/assets/images/logo.png"
+              src={ex2}
               alt="Example Image"
               className=" w-36 h-14"
             />
