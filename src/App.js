@@ -21,6 +21,7 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 import Book from "./components/Book/Book";
 import Wishlist from "./components/Book/Wishlist";
 import Cart from "./components/Book/Cart";
+import BillingForm from "./components/Book/BillingForm";
 
 
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/ecommerce/wishlist" element={<Wishlist/>}/>
             <Route path="/ecommerce/cart" element={<Cart/>}/>
 
+            <Route path="/billingForm" element={<BillingForm/>}/>
 
             <Route element={<ProtectedRoute />}>
               <Route path="/testseries" element={<TestSeries />} />

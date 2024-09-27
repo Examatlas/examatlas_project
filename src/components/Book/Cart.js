@@ -1,91 +1,159 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast"; // Ensure to import toast for notifications
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [bookDetails, setBookDetails] = useState([]);
-  const userId = localStorage.getItem('userId'); // Ensure userId is stored in localStorage upon login
+  const userId = localStorage.getItem('userId');
+
+  const navigate = useNavigate()
+
+  const fetchCartItems = async () => {
+    try {
+      console.log("Fetching cart items...");
+      const response = await axios.get(`http://localhost:5000/api/cart/get/${userId}`);
+      console.log("Cart items response:", response.data);
+      const itemsInCart = response.data.cart?.items || [];
+      setCartItems(itemsInCart);
+    } catch (error) {
+      toast.error("Error fetching cart items.");
+      console.error("Error fetching cart items:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        console.log("Fetching cart items...");
-        const response = await axios.get(`http://localhost:5000/api/cart/get/${userId}`);
-        console.log("Cart items response:", response.data);
-
-        // Accessing the items from the response
-        const itemIds = response.data.cart?.items || []; // Adjusted to access the items array
-        console.log("Item IDs in cart:", itemIds);
-
-        const booksResponse = await axios.get("http://localhost:5000/api/book/getAllBooks");
-        console.log("Books response:", booksResponse.data);
-
-        const allBooks = booksResponse.data.books || [];
-        const itemsInCart = allBooks.filter(book => itemIds.includes(book._id));
-        console.log("Books in cart:", itemsInCart);
-
-        setBookDetails(itemsInCart);
-        setCartItems(itemIds);
-      } catch (error) {
-        toast.error("Error fetching cart items."); // Adding toast notifications for error handling
-        console.error("Error fetching cart items:", error);
-      }
-    };
-
     fetchCartItems();
   }, [userId]);
 
-  const handleRemoveFromCart = async (bookId) => {
+  const handleRemoveFromCart = async (itemId) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/cart/remove", {
-        userId,
-        bookId,
+      const response = await axios.delete("http://localhost:5000/api/cart/remove", {
+        data: {
+          userId,
+          itemId,
+        },
       });
 
       if (response.status === 200) {
-        setCartItems((prevItems) => prevItems.filter(item => item !== bookId));
-        setBookDetails((prevDetails) => prevDetails.filter(book => book._id !== bookId));
-        toast.success("Item removed from cart."); // Notification for successful removal
+        await fetchCartItems();
+        toast.success("Item removed from cart.");
       }
     } catch (error) {
-      toast.error("Error removing item from cart."); // Error handling
+      toast.error("Error removing item from cart.");
       console.error("Error removing item from cart:", error);
     }
   };
 
+  const updateQuantity = async (itemId, newQuantity) => {
+    try {
+      const response = await axios.put("http://localhost:5000/api/cart/update", {
+        userId,
+        itemId,
+        quantity: newQuantity,
+      });
+
+      if (response.status === 200) {
+        await fetchCartItems(); // Fetch updated cart items
+        toast.success("Cart updated successfully.");
+      }
+    } catch (error) {
+      toast.error("Error updating cart quantity.");
+      console.error("Error updating cart quantity:", error);
+    }
+  };
+
+  const incrementQuantity = (itemId, quantity) => {
+    const newQuantity = quantity + 1;
+    updateQuantity(itemId, newQuantity);
+  };
+
+  const decrementQuantity = (itemId, quantity) => {
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      updateQuantity(itemId, newQuantity);
+    }
+  };
+
+  // Calculate subtotal based on cart items
+  const calculateSubtotal = () => {
+    return cartItems.reduce((total, { bookId, quantity }) => {
+      return total + (bookId.price || 0) * quantity;
+    }, 0).toFixed(2);
+  };
+
+  const goBilling = () =>{
+    navigate("/billingForm")
+  }
+
   return (
-    <div className="mt-[100px] mb-[200px]">
-      <h1 className="text-2xl font-bold text-center">Your Cart</h1>
-      <div className="flex flex-wrap justify-center gap-6 mt-4">
-        {bookDetails.length > 0 ? (
-          bookDetails.map((book) => (
-            <div key={book._id} className="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 border relative">
-              <img
-                src={book.imageUrl || "https://via.placeholder.com/150"}
-                alt={book.title}
-                className="h-48 object-contain mb-4"
-              />
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">{book.title}</div>
-                <p className="text-gray-700 text-base"><strong>Author:</strong> {book.author}</p>
-                <p className="text-gray-700 text-base"><strong>Category:</strong> {book.category}</p>
-                <p className="text-gray-700 text-base"><strong>Keyword:</strong> {book.keyword}</p>
-                <p className="text-gray-700 text-base"><strong>Price:</strong> ${book.price}</p>
-              </div>
-              <div className="px-6 py-4 flex justify-between">
-                <button
-                  onClick={() => handleRemoveFromCart(book._id)}
-                  className="bg-red-500 text-white py-2 rounded-lg hover:bg-red-700 font-semibold w-full"
-                >
-                  Remove from Cart
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>Your cart is empty.</p>
-        )}
+    <div className="mt-[120px] mb-[200px] flex flex-col md:flex-row m-10">
+      <div className="flex-grow md:w-1/2 lg:w-2/3">
+        <h1 className="text-2xl font-bold text-center mb-10">Your Cart</h1>
+        <div className="flex flex-col gap-4">
+          {cartItems.length > 0 ? (
+            cartItems.map(({ _id: itemId, bookId, quantity }) => (
+              bookId ? (
+                <div key={itemId} className="flex items-center justify-between bg-white rounded shadow-lg p-4 border">
+                  <img
+                    src={bookId.imageUrl || "https://via.placeholder.com/100"}
+                    alt={bookId.title || "No Title Available"}
+                    className="h-20 w-20 object-cover rounded"
+                  />
+                  <div className="flex-grow ml-4">
+                    <h2 className="text-lg font-bold">{bookId.title || "Untitled Book"}</h2>
+                    <p className="text-gray-600">Price: ₹ {bookId.price.toFixed(2) || "0.00"}</p>
+                  </div>
+                  <div className="flex items-center">
+                    <button
+                      onClick={() => decrementQuantity(itemId, quantity)}
+                      className="bg-gray-300 text-black py-1 px-2 rounded hover:bg-gray-400 mr-2"
+                    >
+                      -
+                    </button>
+                    <span className="text-lg">{quantity}</span>
+                    <button
+                      onClick={() => incrementQuantity(itemId, quantity)}
+                      className="bg-gray-300 text-black py-1 px-2 rounded hover:bg-gray-400 ml-2"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => handleRemoveFromCart(itemId)}
+                      className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700 ml-4"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p key={Math.random()} className="text-red-500">Book details are missing for an item in your cart.</p>
+              )
+            ))
+          ) : (
+            <p className="text-3xl font-mono mt-20">Your cart is empty.</p>
+          )}
+        </div>
+      </div>
+      
+      <div className="md:w-1/2 lg:w-1/3 p-4 ">
+        <h2 className="text-2xl font-bold text-center mb-4">Subtotal</h2>
+        <div className="bg-gray-100 p-6 rounded-lg shadow-lg h-[350px] flex flex-col justify-between">
+          <ul className="mb-4 text-gray-700">
+            {cartItems.map(({ bookId, quantity }) => (
+              <li key={bookId._id} className="flex justify-between">
+                <span>{bookId.title || "Untitled Book"} (x{quantity})</span>
+                <span> ₹ {(bookId.price * quantity).toFixed(2)}</span>
+              </li>
+            ))}
+          </ul>
+          <hr className="my-2 border-gray-400" />
+          <p className="text-2xl font-semibold text-gray-800">Total: ₹ {calculateSubtotal()}</p>
+          <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all duration-300" 
+          onClick={goBilling}>
+            Proceed to Checkout
+          </button>
+        </div>
       </div>
     </div>
   );
