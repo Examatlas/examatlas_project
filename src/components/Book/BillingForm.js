@@ -17,6 +17,8 @@ const BillingForm = () => {
   });
 
   const [cartItems, setCartItems] = useState([]);
+  const [billingId, setBillingId] = useState(null);
+  const [billingDetails, setBillingDetails] = useState(null);
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -31,6 +33,31 @@ const BillingForm = () => {
     };
     fetchCartItems();
   }, [userId]);
+
+  useEffect(() => {
+    // Retrieve billing details from local storage on component mount
+    const storedBillingDetails = JSON.parse(localStorage.getItem("billingDetails"));
+    if (storedBillingDetails) {
+      setBillingDetails(storedBillingDetails);
+      setFormData(storedBillingDetails); // Set formData with stored details
+    }
+  }, []);
+
+  useEffect(() => {
+    if (billingId) {
+      const fetchBillingDetails = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/billing/getbilling/${billingId}`);
+          console.log("Fetched Billing Details:", response.data.billingDetail);
+          setBillingDetails(response.data.billingDetail);
+          localStorage.setItem("billingDetails", JSON.stringify(response.data.billingDetail)); // Save to local storage
+        } catch (error) {
+          toast.error("Error fetching billing details.");
+        }
+      };
+      fetchBillingDetails();
+    }
+  }, [billingId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,29 +77,15 @@ const BillingForm = () => {
       formData.email
     ) {
       try {
-        // Sending the billing details to the API
         const response = await axios.post("http://localhost:5000/api/billing/createBillingDetail", formData);
         
-        // Handle successful response
         if (response.status === 201) {
           toast.success("Billing details submitted successfully!");
-
-          setFormData({
-            firstName: "",
-            lastName: "",
-            country: "India",
-            streetAddress: "",
-            apartment: "",
-            city: "",
-            state: "",
-            pinCode: "",
-            phone: "",
-            email: "",
-          });
-
-          console.log(response.data); // You can handle the response data as needed
+          console.log(response.data);
+          setBillingId(response.data.savedBillingDetail._id);
+          localStorage.setItem("billingDetails", JSON.stringify(formData)); // Save form data to local storage
+          // Reset form logic...
         }
-         
       } catch (error) {
         toast.error("Error submitting billing details.");
         console.error("Error details:", error);
@@ -92,11 +105,11 @@ const BillingForm = () => {
     <div className="flex flex-col md:flex-row mt-[120px] mx-auto max-w-7xl p-8">
       {/* Billing Form */}
       <div className="md:w-2/3 bg-gray-50 p-6 rounded-lg shadow-md mr-8">
-        <h1 className="text-3xl font-semibold mb-6">Billing Details</h1>
+        <h1 className="text-3xl font-semibold mb-6">Shipping Details</h1>
         <form onSubmit={handleSubmit}>
           {/* Form fields... */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">First Name *</label>
+          <div className="mb-4 ">
+            <label className="block text-sm font-medium mb-1 mt-5">First Name *</label>
             <input
               type="text"
               name="firstName"
@@ -106,8 +119,9 @@ const BillingForm = () => {
               required
             />
           </div>
-          {/* Last Name */}
-          <div className="mb-4">
+          {/* Other fields go here... */}
+            {/* Last Name */}
+            <div className="mb-4">
             <label className="block text-sm font-medium mb-1">Last Name *</label>
             <input
               type="text"
@@ -227,25 +241,35 @@ const BillingForm = () => {
       </div>
 
       {/* Order Summary */}
-      <div className="md:w-1/3 bg-white p-6 rounded-lg shadow-lg h-[400px]">
-        <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-        <ul className="mb-4">
-          {cartItems.map(({ bookId, quantity }) => (
-            <li key={bookId._id} className="flex justify-between text-gray-700">
-              <span>{bookId.title || "Untitled Book"} (x{quantity})</span>
-              <span>₹ {(bookId.price * quantity).toFixed(2)}</span>
-            </li>
+      <div className="md:w-1/3 bg-white p-6 rounded-lg shadow-lg h-full">
+        <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
+        <div>
+          {cartItems.map((item) => (
+            <div key={item.bookId._id} className="flex justify-between mb-2">
+              <span>{item.bookId.title} (x{item.quantity})</span>
+              <span> {item.bookId.price}</span>
+            </div>
           ))}
-        </ul>
+        </div>
         <hr className="my-4" />
-        <div className="flex justify-between text-lg font-bold">
-          <span>Subtotal</span>
-          <span>₹ {calculateSubtotal()}</span>
+        <div className="flex justify-between font-semibold">
+          <span className="text-2xl">Subtotal:</span>
+          <span className="text-2xl">{calculateSubtotal()}</span>
         </div>
-        <div className="mt-4">
-          <p className="text-gray-600">Shipping: All India</p>
-          <p className="text-lg font-bold">Total: ₹ {calculateSubtotal()}</p>
-        </div>
+
+        {/* Display Billing Details if available */}
+        {billingDetails && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Shipping Address</h3>
+            <p>{billingDetails.firstName} {billingDetails.lastName}</p>
+            <p>{billingDetails.streetAddress} &nbsp;
+            {billingDetails.apartment && `${billingDetails.apartment},`}</p>
+            <p>{billingDetails.city}, {billingDetails.state}, {billingDetails.pinCode}</p>
+            <p>{billingDetails.country}</p>
+            <p>Phone: {billingDetails.phone}</p>
+            <p>Email: {billingDetails.email}</p>
+          </div>
+        )}
       </div>
     </div>
   );
