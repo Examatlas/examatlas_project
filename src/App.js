@@ -22,6 +22,7 @@ import Book from "./components/Book/Book";
 import Wishlist from "./components/Book/Wishlist";
 import Cart from "./components/Book/Cart";
 import BillingForm from "./components/Book/BillingForm";
+import ScheduledLiveClasses from "./components/LiveClasses/ScheduledLiveClasses";
 
 
 
@@ -50,7 +51,11 @@ function App() {
               element={<UPSCLiveClass />}
             />
             <Route
-              path="/livecourse/upsc-live-class/:meetingId"
+              path="/livecourse/upsc-live-class/:courseId"
+              element={<ScheduledLiveClasses />}
+            />
+            <Route
+              path="/livecourse/live"
               element={<ViewerScreenContainer />}
             />
             <Route path="/currentaffairs" element={<CurrentAffairs />} />
