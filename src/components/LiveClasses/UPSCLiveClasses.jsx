@@ -21,12 +21,13 @@ const UPSCLiveClass = () => {
 
   return (
     <div className='mt-[6rem] mx-[5rem]'>
-      <h1 className='mt-10 text-3xl text-center'>UPSC LIVE CLASSES</h1>
+      <h1 className='mt-10 text-3xl text-center'>UPSC LIVE COURSES</h1>
       <div className='grid grid-cols-4 justify-center items-center p-4 my-4 gap-4 '>
         {
           classData && classData?.map((data) => {
             return (
-              <div className="w-[17.8rem] shadow-md cursor-pointer mb-4 rounded-lg flex flex-col transform transition-transform duration-300 p-2">
+              <Link to={`/livecourse/upsc-live-class/${data?._id}`} 
+              className="w-[17.8rem] shadow-md cursor-pointer mb-4 rounded-lg flex flex-col transform transition-transform duration-300 p-2">
                 <div className="w-full relative">
                   {/* {
                             live &&
@@ -50,17 +51,11 @@ const UPSCLiveClass = () => {
                 </div>
                 <div className="w-full  px-2 py-2 ">
                   <span className="font-semibold text-2xl">{data?.title}</span><br />
-                  <p className=''>{data?.description}</p>
+                  <p className='' dangerouslySetInnerHTML={{__html:data?.description?.substring(0,150)+"..."}}></p>
                   
                   By:{" "} <span className="font-semibold text-gray-800 ">{data?.teacher}</span><br />
-                  {/* <span className="font-semibold text-gray-600">Language</span><br /> */}
-                  {/* <span className="font-semibold text-gray-600">Time: {data?.time}</span><br /> */}
-
-                  <Link to={`/livecourse/upsc-live-class/${data?.meetingId}`}>
-                    <button className='px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md'>join Class</button>
-                  </Link>
                 </div>
-              </div>
+              </Link>
             )
           })
         }
