@@ -3,6 +3,7 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast"; // For notifications
+import API_BASE_URL from "../../config";
 
 const Book = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -16,7 +17,8 @@ const Book = () => {
   // Fetch all books, wishlist, and cart
   const fetchAllBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/book/getAllBooks");
+      // const response = await axios.get("http://localhost:5000/api/book/getAllBooks");
+      const response = await axios.get(`${API_BASE_URL}/book/getAllBooks`);
       setCategoryData(response?.data?.books || []);
 
       // Load wishlist from localStorage
@@ -24,7 +26,8 @@ const Book = () => {
       setWishlist(storedWishlist);
 
       // Fetch cart from API
-      const cartResponse = await axios.get(`http://localhost:5000/api/cart/get/${userId}`);
+      // const cartResponse = await axios.get(`http://localhost:5000/api/cart/get/${userId}`);
+      const cartResponse = await axios.get(`${API_BASE_URL}/cart/get/${userId}`);
       setCart(cartResponse.data.cartItems || []);
     } catch (error) {
       console.log(error);
@@ -43,7 +46,8 @@ const Book = () => {
     if (!bookId) return;
 
     try {
-      const response = await axios.post("http://localhost:5000/api/wishlist/toggleWishlist", {
+      // const response = await axios.post("http://localhost:5000/api/wishlist/toggleWishlist", {
+      const response = await axios.post(`${API_BASE_URL}/wishlist/toggleWishlist`, {
         userId,
         bookId,
       });
@@ -72,7 +76,8 @@ const Book = () => {
     if (!bookId) return;
 
     try {
-      const response = await axios.post("http://localhost:5000/api/cart/add", {
+      // const response = await axios.post("http://localhost:5000/api/cart/add", {
+      const response = await axios.post(`${API_BASE_URL}/cart/add`, {
         userId,
         bookId,
       });
