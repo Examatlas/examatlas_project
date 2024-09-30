@@ -20,6 +20,8 @@ const BillingForm = () => {
   const [billingId, setBillingId] = useState(null);
   const [billingDetails, setBillingDetails] = useState(null);
   const userId = localStorage.getItem("userId");
+  console.log("Fetch Cart Items", cartItems);
+  
 
   useEffect(() => {
     // Fetch cart items from the API
@@ -50,7 +52,7 @@ const BillingForm = () => {
           const response = await axios.get(`http://localhost:5000/api/billing/getbilling/${billingId}`);
           console.log("Fetched Billing Details:", response.data.billingDetail);
           setBillingDetails(response.data.billingDetail);
-          localStorage.setItem("billingDetails", JSON.stringify(response.data.billingDetail)); // Save to local storage
+          // localStorage.setItem("billingDetails", JSON.stringify(response.data.billingDetail)); // Save to local storage
         } catch (error) {
           toast.error("Error fetching billing details.");
         }

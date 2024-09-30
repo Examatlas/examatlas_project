@@ -58,15 +58,20 @@ const HLSPlayer = () => {
 
 // const ViewerScreenContainer = ({ meetingId }) => {
 const ViewerScreenContainer = () => {
-  const { meetingId } = useParams();
+  const { meetingId,token } = useParams();
+  console.log(token);
+  
 
   return (
     <>
       <div className="flex w-full justify-between mt-[8rem] my-[2rem]">
         <MeetingProvider
-          token={authToken}
+          // token={authToken}
+          token={token}
+          // token={`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiI0OWZkNjU0Ny1lZDQ0LTRhZGYtYTExMi1iOWNmMjlmNDU3NmEiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sInZlcnNpb24iOjIsInJvb21JZCI6IjJreXYtZ3pheS02NHBnIiwicGFydGljaXBhbnRJZCI6Imx4dmRwbHd0IiwiaWF0IjoxNzI3Njk0MDIwLCJleHAiOjE3Mjc3MDQ4MjB9.NnDHA_ioZ-VMw8Jnu4Rd-3QDIWGFLEhxIi_vitMigqA`}
           // config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
           config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
+          // config={{ meetingId:"c8m5-zj0q-h0lu", name: "C.V. Raman", mode: "VIEWER" }}
           joinWithoutUserInteraction
         >
           <div className=" border shadow-sm rounded-md flex justify-center items-center bg-blue-50 w-[100%] h-[30rem] mx-[1rem]">

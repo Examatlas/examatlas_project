@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import API_BASE_URL from '../../config';
 import axios from 'axios';
 
@@ -29,7 +29,9 @@ const ScheduledLiveClasses = () => {
                         <div className='border'>
                             <p>{item?.title}</p>
                             <p>{item?.time}</p>
+                            <Link to={`/livecourse/live/${item?.meetingId}/${item?.token}"`}>
                             <button className='bg-blue-500 px-2 py-2 rounded-md'>Join</button>
+                            </Link>
                         </div>
                     );
                 })
