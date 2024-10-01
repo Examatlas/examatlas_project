@@ -1,4 +1,3 @@
-// export default BillingForm;
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -22,11 +21,7 @@ const BillingForm = () => {
   const [cartItems, setCartItems] = useState([]);
   const [billingDetails, setBillingDetails] = useState(null);
   const userId = localStorage.getItem("userId");
-
-  console.log("Fetch Cart Items", cartItems);
-  
   const [billingDetailId, setBillingDetailId] = useState(null); // Initialize billingDetailId state
-
 
   // Fetch cart items from the API
   useEffect(() => {
@@ -40,31 +35,6 @@ const BillingForm = () => {
     };
     fetchCartItems();
   }, [userId]);
-
-  useEffect(() => {
-    // Retrieve billing details from local storage on component mount
-    const storedBillingDetails = JSON.parse(localStorage.getItem("billingDetails"));
-    if (storedBillingDetails) {
-      setBillingDetails(storedBillingDetails);
-      setFormData(storedBillingDetails); // Set formData with stored details
-    }
-  }, []);
-
-  useEffect(() => {
-    if (billingId) {
-      const fetchBillingDetails = async () => {
-        try {
-          const response = await axios.get(`http://localhost:5000/api/billing/getbilling/${billingId}`);
-          console.log("Fetched Billing Details:", response.data.billingDetail);
-          setBillingDetails(response.data.billingDetail);
-          // localStorage.setItem("billingDetails", JSON.stringify(response.data.billingDetail)); // Save to local storage
-        } catch (error) {
-          toast.error("Error fetching billing details.");
-        }
-      };
-      fetchBillingDetails();
-    }
-  }, [billingId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +57,7 @@ const BillingForm = () => {
       try {
         // Sending the POST request to create billing detail
         const response = await axios.post(
-          `${API_BASE_URL}/billing/createBillingDetail`,
+         ` ${API_BASE_URL}/billing/createBillingDetail`,
           { ...formData, userId } // Sending form data along with userId
         );
 
@@ -219,7 +189,7 @@ const BillingForm = () => {
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">PIN Code *</label>
             <input
-              type="number"
+              type="text"
               name="pinCode"
               value={formData.pinCode}
               onChange={handleChange}
@@ -230,7 +200,7 @@ const BillingForm = () => {
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">Phone *</label>
             <input
-              type="number"
+              type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
@@ -290,5 +260,3 @@ const BillingForm = () => {
 };
 
 export default BillingForm;
-
-
