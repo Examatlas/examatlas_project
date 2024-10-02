@@ -7,13 +7,11 @@ import API_BASE_URL from "../../config";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const userId = localStorage.getItem('userId');
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchCartItems = async () => {
     try {
       console.log("Fetching cart items...");
-      // const response = await axios.get(`http://localhost:5000/api/cart/get/${userId}`);
       const response = await axios.get(`${API_BASE_URL}/cart/get/${userId}`);
       console.log("Cart items response:", response.data);
       const itemsInCart = response.data.cart?.items || [];
@@ -30,7 +28,6 @@ const Cart = () => {
 
   const handleRemoveFromCart = async (itemId) => {
     try {
-      // const response = await axios.delete("http://localhost:5000/api/cart/remove", {
       const response = await axios.delete(`${API_BASE_URL}/cart/remove`, {
         data: {
           userId,
@@ -50,7 +47,6 @@ const Cart = () => {
 
   const updateQuantity = async (itemId, newQuantity) => {
     try {
-      // const response = await axios.put("http://localhost:5000/api/cart/update", {
       const response = await axios.put(`${API_BASE_URL}/cart/update`, {
         userId,
         itemId,
@@ -68,27 +64,25 @@ const Cart = () => {
   };
 
   const incrementQuantity = (itemId, quantity) => {
-    const newQuantity = quantity + 1;
-    updateQuantity(itemId, newQuantity);
+    updateQuantity(itemId, quantity + 1);
   };
 
   const decrementQuantity = (itemId, quantity) => {
     if (quantity > 1) {
-      const newQuantity = quantity - 1;
-      updateQuantity(itemId, newQuantity);
+      updateQuantity(itemId, quantity - 1);
     }
   };
 
   // Calculate subtotal based on cart items
   const calculateSubtotal = () => {
     return cartItems.reduce((total, { bookId, quantity }) => {
-      return total + (bookId.price || 0) * quantity;
+      return total + ((bookId?.price || 0) * quantity);
     }, 0).toFixed(2);
   };
 
-  const goBilling = () =>{
-    navigate("/billingForm")
-  }
+  const goBilling = () => {
+    navigate("/billingForm");
+  };
 
   return (
     <div className="mt-[120px] mb-[200px] flex flex-col md:flex-row m-10">
@@ -106,7 +100,7 @@ const Cart = () => {
                   />
                   <div className="flex-grow ml-4">
                     <h2 className="text-lg font-bold">{bookId.title || "Untitled Book"}</h2>
-                    <p className="text-gray-600">Price: ₹ {bookId.price.toFixed(2) || "0.00"}</p>
+                    <p className="text-gray-600">Price: ₹ {bookId.price?.toFixed(2) || "0.00"}</p>
                   </div>
                   <div className="flex items-center">
                     <button
@@ -130,9 +124,7 @@ const Cart = () => {
                     </button>
                   </div>
                 </div>
-              ) : (
-                <p key={Math.random()} className="text-red-500">Book details are missing for an item in your cart.</p>
-              )
+              ) :  null // Only render if bookId exists
             ))
           ) : (
             <p className="text-3xl font-mono mt-20">Your cart is empty.</p>
@@ -140,15 +132,17 @@ const Cart = () => {
         </div>
       </div>
       
-      <div className="md:w-1/2 lg:w-1/3 p-4 ">
+      <div className="md:w-1/2 lg:w-1/3 p-4">
         <h2 className="text-2xl font-bold text-center mb-4">Subtotal</h2>
         <div className="bg-gray-100 p-6 rounded-lg shadow-lg h-[350px] flex flex-col justify-between">
           <ul className="mb-4 text-gray-700">
             {cartItems.map(({ bookId, quantity }) => (
-              <li key={bookId._id} className="flex justify-between">
-                <span>{bookId.title || "Untitled Book"} (x{quantity})</span>
-                <span> ₹ {(bookId.price * quantity).toFixed(2)}</span>
-              </li>
+              bookId ? (
+                <li key={bookId._id} className="flex justify-between">
+                  <span>{bookId.title || "Untitled Book"} (x{quantity})</span>
+                  <span> ₹ {(bookId.price * quantity).toFixed(2)}</span>
+                </li>
+              ) : null // Only show if bookId exists
             ))}
           </ul>
           <hr className="my-2 border-gray-400" />

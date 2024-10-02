@@ -10,6 +10,8 @@ const UserList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [validationError, setValidationError] = useState("");
+  const [paymentError, setPaymentError] = useState("");
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -24,7 +26,6 @@ const UserList = () => {
         setError(error.response?.data?.message || "Error fetching billing details");
       }
     };
-
     fetchData();
   }, []);
 
@@ -34,6 +35,7 @@ const UserList = () => {
     try {
       await axios.delete(`${API_BASE_URL}/billing/billing/deletebilling/${userId}/${billingId}`);
       setUserData(userData.filter((user) => user._id !== billingId));
+      setSelectedUserId(null); // Reset the selected user after delete
     } catch (error) {
       console.error("Error deleting billing detail:", error);
     }
@@ -54,6 +56,7 @@ const UserList = () => {
         prevData.map((user) => (user._id === editUserData._id ? editUserData : user))
       );
       setIsEditing(false);
+      setValidationError(""); // Clear validation error
     } catch (error) {
       console.error("Error updating billing detail:", error);
     }
@@ -62,6 +65,21 @@ const UserList = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleProceedToPayment = () => {
+    if (!selectedUserId) {
+      setValidationError("Please select an address to proceed to payment.");
+      return;
+    }
+    // Logic for proceeding to payment
+    setPaymentError(""); // Clear any previous errors
+    console.log("Proceeding to payment for user ID:", selectedUserId);
+  };
+
+  const handleAddressSelect = (id) => {
+    setSelectedUserId(id);
+    setValidationError(""); // Clear the validation error when an address is selected
   };
 
   if (loading) {
@@ -74,7 +92,9 @@ const UserList = () => {
 
   return (
     <div className="container mx-auto p-4 mt-5 max-w-screen-lg">
-      <h1 className="text-2xl font-semibold mb-6 text-center">Shipping Address</h1>
+      <h1 className="text-2xl font-semibold mb-6 ">Shipping Address</h1>
+      {validationError && <div className="text-red-500 mb-4">{validationError}</div>}
+      {paymentError && <div className="text-red-500 mb-4">{paymentError}</div>}
       {userData.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {userData.map((user) => (
@@ -88,7 +108,7 @@ const UserList = () => {
                   name="user"
                   value={user._id}
                   checked={selectedUserId === user._id}
-                  onChange={() => setSelectedUserId(user._id)}
+                  onChange={() => handleAddressSelect(user._id)} // Use the new function here
                   className="mr-3"
                 />
                 <div className="text-sm">
@@ -117,7 +137,7 @@ const UserList = () => {
           ))}
         </div>
       ) : (
-        <p className="text-center">No billing details available</p>
+        <p className="text-center">No billing details available! <br/>Add Shipping Details.</p>
       )}
 
       {/* Edit form/modal */}
@@ -230,17 +250,16 @@ const UserList = () => {
                 />
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex justify-end space-x-4">
                 <button
-                  type="button"
                   onClick={() => setIsEditing(false)}
-                  className="text-gray-500"
+                  className="px-4 py-2 border border-gray-300 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  className="px-4 py-2 bg-blue-500 text-white rounded"
                 >
                   Save
                 </button>
@@ -249,9 +268,17 @@ const UserList = () => {
           </div>
         </div>
       )}
+
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={handleProceedToPayment}
+          className="p-3 mt-5 bg-blue-500 w-[320px] text-white rounded-lg font-semibold"
+        >
+          Proceed to Payment
+        </button>
+      </div>
     </div>
   );
 };
 
 export default UserList;
-
