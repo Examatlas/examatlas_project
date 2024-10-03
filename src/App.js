@@ -23,9 +23,8 @@ import Wishlist from "./components/Book/Wishlist";
 import Cart from "./components/Book/Cart";
 import BillingForm from "./components/Book/BillingForm";
 import ScheduledLiveClasses from "./components/LiveClasses/ScheduledLiveClasses";
-import Payment from "./components/Book/Payment";
 
-
+import PaymentSuccess from "./PaymentSuccess";
 
 
 function App() {
@@ -45,6 +44,9 @@ function App() {
             <Route path='/home' element={<Home />} />
           
             <Route path='/emailbox' element={<EmailBox/>}/>
+
+            {/* payment gateway  */}
+            <Route path="/paymentsuccess" element={<PaymentSuccess />} />
 
            
             <Route
@@ -68,7 +70,6 @@ function App() {
             <Route path="/ecommerce/cart" element={<Cart/>}/>
 
             <Route path="/billingForm" element={<BillingForm/>}/>
-            <Route path="/payment" element={<Payment/>}/>
 
             <Route element={<ProtectedRoute />}>
               <Route path="/testseries" element={<TestSeries />} />

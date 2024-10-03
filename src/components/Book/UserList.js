@@ -3,7 +3,7 @@ import axios from "axios";
 import API_BASE_URL from "../../config";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
-const UserList = () => {
+const UserList = ({ calculateSubtotal,checkoutHandler}) => {
   const [userData, setUserData] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [editUserData, setEditUserData] = useState(null);
@@ -137,7 +137,7 @@ const UserList = () => {
           ))}
         </div>
       ) : (
-        <p className="text-center">No billing details available! <br/>Add Shipping Details.</p>
+        <p className="text-center">No billing details available! <br />Add Shipping Details.</p>
       )}
 
       {/* Edit form/modal */}
@@ -271,11 +271,15 @@ const UserList = () => {
 
       <div className="mt-6 flex justify-center">
         <button
-          onClick={handleProceedToPayment}
+          onClick={() => {
+            handleProceedToPayment();
+            checkoutHandler(calculateSubtotal());
+          }}
           className="p-3 mt-5 bg-blue-500 w-[320px] text-white rounded-lg font-semibold"
         >
           Proceed to Payment
         </button>
+
       </div>
     </div>
   );
