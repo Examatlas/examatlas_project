@@ -109,7 +109,7 @@ const BillingForm = () => {
   const checkoutHandler = async (amount) => {
     const { data: { key } } = await axios.get("http://localhost:5000/api/getkey");
 
-    const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount });
+    const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount });  // user id , billing detail id , order id 
 
     const options = {
         key,
@@ -123,7 +123,7 @@ const BillingForm = () => {
         prefill: {
             name: "ExamAtlas",
             email: "crownclassesrnc@gmail.com",
-            contact: "9999999999"
+            contact: "6205435760"
         },
         notes: {
             "address": "Ranchi crown publication"
@@ -135,7 +135,6 @@ const BillingForm = () => {
     const razor = new window.Razorpay(options);
     razor.open();
 }
-
 
   return (
     <div className="flex flex-col md:flex-row mt-[120px] mx-auto max-w-7xl p-8">
