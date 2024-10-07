@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import API_BASE_URL from "../../config";
 import UserList from "./UserList";
 import { useNavigate } from "react-router-dom";
 import ex2 from "../../images/ex2.png";
+import { AuthContext } from "../../Auth/AuthContext";
+// import dotenv from "dotenv";
+// dotenv.config()
 
 const BillingForm = () => {
   const [formData, setFormData] = useState({
@@ -21,11 +24,13 @@ const BillingForm = () => {
   });
 
   const navigate = useNavigate()
+ 
 
   const [cartItems, setCartItems] = useState([]);
   const [billingDetails, setBillingDetails] = useState(null);
   const userId = localStorage.getItem("userId");
   const [billingDetailId, setBillingDetailId] = useState(null); // Initialize billingDetailId state
+  
 
   // Fetch cart items from the API
   useEffect(() => {
@@ -95,46 +100,110 @@ const BillingForm = () => {
     }
   };
 
-  // Calculate cart subtotal
+ 
   const calculateSubtotal = () => {
-    return cartItems
-      .reduce((total, { bookId, quantity }) => {
-        return total + (bookId?.price || 0) * quantity;
-      }, 0)
-      .toFixed(2);
+    return cartItems.reduce((total, { bookId, quantity }) => {
+      return total + (bookId?.sellPrice || 0) * quantity;
+    }, 0);
   };
 
+  const shippingCharge = () => {
+    const subtotal = calculateSubtotal();
+    return subtotal >= 2000 ? 0 : subtotal < 1000 ? 100 : 150;
+  };
 
+  // Calculate the total including shipping charge
+  const calculateTotal = () => {
+    return calculateSubtotal() + shippingCharge();
+  };
+
+  const subtotal = calculateSubtotal().toFixed(2); // Format subtotal to 2 decimal places
+  const shipping = shippingCharge(); // Get shipping charge
+
+  const { user } = useContext(AuthContext);
+
+// console.log(process.env.REACT_APP_RAZORPAY_API_KEY)
   // payment gateway
   const checkoutHandler = async (amount) => {
-    const { data: { key } } = await axios.get("http://localhost:5000/api/getkey");
-
-    const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount });  // user id , billing detail id , order id 
+    // const { data: { key } } = await axios.get("http://localhost:5000/api/getkey");
+    console.log(billingDetailId)
+    const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount , cartItems , userId , billingDetailId });  // user id , billing detail id , order id 
 
     const options = {
-        key,
-        amount: order.amount,
-        currency: "INR",
+      key : process.env.REACT_APP_RAZORPAY_API_KEY ,
+      amount: order.amount,
+      currency: "INR",
+      name: "ExamAtlas",
+      description: "A Book Store",
+      image: ex2,
+      order_id: order.id,
+      callback_url: "http://localhost:5000/api/paymentverification",
+      prefill: {
         name: "ExamAtlas",
-        description: "A Book Store",
-        image: ex2,
-        order_id: order.id,
-        callback_url: "http://localhost:5000/api/paymentverification",
-        prefill: {
-            name: "ExamAtlas",
-            email: "crownclassesrnc@gmail.com",
-            contact: "6205435760"
-        },
-        notes: {
-            "address": "Ranchi crown publication"
-        },
-        theme: {
-            "color": "#121212"
-        }
+        email: "crownclassesrnc@gmail.com",
+        contact: "6205435760"
+      },
+      notes: {
+        "address": "Ranchi crown publication"
+      },
+      theme: {
+        "color": "#121212"
+      }
     };
     const razor = new window.Razorpay(options);
     razor.open();
-}
+  }
+
+
+//  const checkoutHandler = async (amount) => {
+//   try {
+//     // Fetch the Razorpay key
+//     const { data: { key } } = await axios.get("http://localhost:5000/api/getkey");
+//     // Create an order
+//     const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount });
+
+//     const options = {
+//       key,
+//       amount: order.amount,
+//       currency: "INR",
+//       name: "ExamAtlas",
+//       description: "A Book Store",
+//       image: ex2,
+//       order_id: order.id,
+//       callback_url: "http://localhost:5000/api/paymentverification",
+//       prefill: {
+//         name: "ExamAtlas",
+//         email: "crownclassesrnc@gmail.com",
+//         contact: "6205435760"
+//       },
+//       notes: {
+//         "address": "Ranchi crown publication"
+//       },
+//       theme: {
+//         "color": "#121212"
+//       }
+//     };
+
+//     const razor = new window.Razorpay(options);
+//     razor.open();
+
+//     // Listen for the payment callback
+//     razor.on('payment.failed', async (response) => {
+//       // Handle payment failure here (optional)
+//       console.error('Payment failed:', response);
+//     });
+
+//     razor.on('payment.success', async (response) => {
+//       // Send user ID along with the payment details to the backend for verification
+//       await axios.post("http://localhost:5000/api/paymentverification", {
+//         userId: user.data._id, // Pass the user ID here
+//       });
+//     });
+
+//   } catch (error) {
+//     console.error('Checkout error:', error);
+//   }
+// };
 
   return (
     <div className="flex flex-col md:flex-row mt-[120px] mx-auto max-w-7xl p-8">
@@ -271,11 +340,11 @@ const BillingForm = () => {
         <div className="mb-4">
           {cartItems.length > 0 ? (
             cartItems
-              .filter(({ bookId }) => bookId && bookId.title && bookId.price) // Ensure valid bookId, title, and price
+              .filter(({ bookId }) => bookId && bookId.title && bookId.sellPrice) // Ensure valid bookId, title, and price
               .map(({ bookId, quantity }) => (
                 <div key={bookId._id} className="flex justify-between mb-2">
                   <span>{bookId.title} (x{quantity})</span>
-                  <span>₹{(bookId.price * quantity).toFixed(2)}</span>
+                  <span>₹{(bookId.sellPrice * quantity).toFixed(2)}</span>
                 </div>
               ))
           ) : (
@@ -287,22 +356,22 @@ const BillingForm = () => {
         {/* Subtotal */}
         <div className="flex justify-between font-semibold">
           <span>Subtotal</span>
-          <span>₹{calculateSubtotal()}</span>
+          <span>₹{subtotal}</span>
         </div>
         <hr className="my-4" />
-        {/* Shipping */}
+      
         <div className="flex justify-between font-semibold">
           <span>Shipping</span>
-          <span>Free</span>
+         <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
         </div>
         <hr className="my-4" />
         {/* Total */}
         <div className="flex justify-between font-semibold text-xl">
           <span>Total</span>
-          <span>₹{calculateSubtotal()}</span>
+     <span>₹{calculateTotal().toFixed(2)}</span>
         </div>
 
-        <UserList calculateSubtotal={calculateSubtotal} checkoutHandler={checkoutHandler}/>
+        <UserList calculateTotal={calculateTotal} checkoutHandler={checkoutHandler} setBillingDetailId={setBillingDetailId}/>
 
       </div>
     </div>
@@ -310,3 +379,6 @@ const BillingForm = () => {
 };
 
 export default BillingForm;
+
+
+

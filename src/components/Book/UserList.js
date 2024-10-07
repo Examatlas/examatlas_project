@@ -3,7 +3,7 @@ import axios from "axios";
 import API_BASE_URL from "../../config";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
-const UserList = ({ calculateSubtotal,checkoutHandler}) => {
+const UserList = ({ calculateTotal,checkoutHandler,setBillingDetailId}) => {
   const [userData, setUserData] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [editUserData, setEditUserData] = useState(null);
@@ -79,7 +79,8 @@ const UserList = ({ calculateSubtotal,checkoutHandler}) => {
 
   const handleAddressSelect = (id) => {
     setSelectedUserId(id);
-    setValidationError(""); // Clear the validation error when an address is selected
+    setValidationError(""); 
+    setBillingDetailId(id)
   };
 
   if (loading) {
@@ -273,7 +274,7 @@ const UserList = ({ calculateSubtotal,checkoutHandler}) => {
         <button
           onClick={() => {
             handleProceedToPayment();
-            checkoutHandler(calculateSubtotal());
+            checkoutHandler(calculateTotal());
           }}
           className="p-3 mt-5 bg-blue-500 w-[320px] text-white rounded-lg font-semibold"
         >

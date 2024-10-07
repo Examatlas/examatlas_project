@@ -76,7 +76,7 @@ const Cart = () => {
   // Calculate subtotal based on cart items
   const calculateSubtotal = () => {
     return cartItems.reduce((total, { bookId, quantity }) => {
-      return total + ((bookId?.price || 0) * quantity);
+      return total + ((bookId?.sellPrice || 0) * quantity);
     }, 0).toFixed(2);
   };
 
@@ -100,7 +100,7 @@ const Cart = () => {
                   />
                   <div className="flex-grow ml-4">
                     <h2 className="text-lg font-bold">{bookId.title || "Untitled Book"}</h2>
-                    <p className="text-gray-600">Price: ₹ {bookId.price?.toFixed(2) || "0.00"}</p>
+                    <p className="text-gray-600">Price: ₹ {bookId.sellPrice?.toFixed(2) || "0.00"}</p>
                   </div>
                   <div className="flex items-center">
                     <button
@@ -140,7 +140,7 @@ const Cart = () => {
               bookId ? (
                 <li key={bookId._id} className="flex justify-between">
                   <span>{bookId.title || "Untitled Book"} (x{quantity})</span>
-                  <span> ₹ {(bookId.price * quantity).toFixed(2)}</span>
+                  <span> ₹ {(bookId.sellPrice * quantity).toFixed(2)}</span>
                 </li>
               ) : null // Only show if bookId exists
             ))}

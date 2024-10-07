@@ -115,7 +115,7 @@ const Book = () => {
     setShowAll(!showAll);
   };
 
-  const handleViewEach = () =>{
+  const handleViewEach = () => {
     setShowEach(!showEach)
   }
 
@@ -234,24 +234,23 @@ const Book = () => {
 
 
       {/* Display filtered books */}
-      <div  className="flex justify-between items-center">
+      <div className="flex justify-between items-center">
         <h1 className="ml-16 font-semibold text-3xl mb-10">Books for all competitive Exams!
         </h1>
         {filteredBooks.length > 4 && (
-            <button
-              onClick={handleViewEach}
-              className="mt-0 mr-20 p-2 font-bold text-xl rounded"
-            >
-              {showEach ? 'Show Less' : 'View All '}
-            </button>
-          )}
+          <button
+            onClick={handleViewEach}
+            className="mt-0 mr-20 p-2 font-bold text-xl rounded"
+          >
+            {showEach ? 'Show Less' : 'View All '}
+          </button>
+        )}
       </div>
-
 
       <div className="flex flex-wrap justify-center gap-6">
         {filteredBooks.length > 0 ? (
           // (showAll ? categoryData : categoryData.slice(0, 6)).map((dataItem) => (
-          (showEach ? filteredBooks :filteredBooks.slice(0,8)).map((dataItem) => (
+          (showEach ? filteredBooks : filteredBooks.slice(0, 8)).map((dataItem) => (
             <div key={dataItem._id} className="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 border relative w-[350px] mb-10">
               {/* Wishlist Icon */}
               <button
@@ -276,7 +275,17 @@ const Book = () => {
                 <p className="text-gray-700 text-base"><strong>Author:</strong> {dataItem.author}</p>
                 <p className="text-gray-700 text-base"><strong>Category:</strong> {dataItem.category}</p>
                 <p className="text-gray-700 text-base"><strong>Keyword:</strong> {dataItem.keyword}</p>
-                <p className="text-gray-700 text-base"><strong>Price:</strong> {dataItem.price}</p>
+                
+                <p className="text-gray-700 text-base">
+                  <strong>MRP:</strong> &#x20B9;{dataItem.sellPrice} &nbsp;
+                  <strike>&#x20B9;{dataItem.price}</strike>
+                  {/* Calculate Discount Percentage */}
+                  {dataItem.price > 0 && (
+                    <span className="text-green-600 ml-2">
+                      ({Math.round(((dataItem.price - dataItem.sellPrice) / dataItem.price) * 100)}% OFF)
+                    </span>
+                  )}
+                </p>
 
                 {dataItem.tags && dataItem.tags.length > 0 && (
                   <div className="mt-4">
@@ -307,20 +316,20 @@ const Book = () => {
         )}
       </div>
 
-       {/* banner */}
-       <div>
+      {/* banner */}
+      <div>
         <img src="" className="border border-gray-500 mt-1 w-[1470px] h-[300px] m-5 ml-14" />
       </div>
 
 
       {/* top exam preparation */}
       <div>
-         <h1 className="ml-14 mt-10 font-bold text-3xl ">Top Exam Preparation</h1>
-         <Exam/>
+        <h1 className="ml-14 mt-10 font-bold text-3xl ">Top Exam Preparation</h1>
+        <Exam />
       </div>
 
-       {/* banner */}
-       <div>
+      {/* banner */}
+      <div>
         <img src="" className="border border-gray-500  w-[1470px] h-[300px] m-5 ml-14 mt-10" />
       </div>
 

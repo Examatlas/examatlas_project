@@ -24,8 +24,8 @@ import Cart from "./components/Book/Cart";
 import BillingForm from "./components/Book/BillingForm";
 import ScheduledLiveClasses from "./components/LiveClasses/ScheduledLiveClasses";
 
-import PaymentSuccess from "./PaymentSuccess";
-
+import PaymentSuccess from "./components/Book/PaymentSuccess";
+import OrderTrack from "./components/Book/OrderTrack";
 
 function App() {
   return (
@@ -47,7 +47,7 @@ function App() {
 
             {/* payment gateway  */}
             <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-
+            <Route path="ordertrack" element={<OrderTrack/>}/>
            
             <Route
               path="/livecourse/upsc-live-class"
