@@ -31,7 +31,7 @@ const SignupForm = ({ onClose }) => {
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/user/createUser`,
+        `${API_BASE_URL}/auth/createUser`,
         { name, email, mobile, password, confirmPassword }
       );
 

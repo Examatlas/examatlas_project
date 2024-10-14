@@ -27,7 +27,7 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
 
   try{
     const response = await axios.post(
-      `${API_BASE_URL}/user/loginUser`,
+      `${API_BASE_URL}/auth/loginUser`,
       {mobile,password}
     );
     
