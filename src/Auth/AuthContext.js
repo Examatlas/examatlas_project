@@ -1,8 +1,9 @@
 // AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';  // Import jwt-decode
 import API_BASE_URL from '../config';
+import api from '../Api/Api_config';
 
 export const AuthContext = createContext();
 
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
           // const userId = decodedToken?.userId || decodedToken?._id; 
           console.log("userId is ",userId)
   
-          const response = await axios.get(`${API_BASE_URL}/user/getUserById/${userId}`, {
+          const response = await api.get(`api/user/getUserById/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

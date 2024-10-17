@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import API_BASE_URL from '../../config';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../../Api/Api_config';
 
 const ScheduledLiveClasses = () => {
     const [scheduledData, setScheduledData] = useState();
     const { courseId } = useParams();
     const getAllScheduledCourseByCourseId = async () => {
         try {
-            const res = await axios.get(`${API_BASE_URL}/liveclass/getAllScheduledCourseByCourseId/${courseId}`);
+            const res = await api.get(`api/liveclass/getAllScheduledCourseByCourseId/${courseId}`);
             if (res?.status === 200) {
                 setScheduledData(res?.data?.courses)
             }

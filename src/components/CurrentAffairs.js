@@ -3,6 +3,7 @@ import RecentCurrentAffairs from "./RecentCurrentAffairs";
 import API_BASE_URL from "../config";
 import axios from "axios";
 import BlogLoading from "../loading/BlogLoading";
+import api from "../Api/Api_config";
 
 const CurrentAffairs = () => {
   const [CurrentAffairData, setCurrentAffairData] = useState([]);
@@ -10,7 +11,7 @@ const CurrentAffairs = () => {
 
   const fetchAllCurrentAffairs = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/currentAffair/getAllCA`);
+      const response = await api.get("/api/currentAffair/getAllCA");
       setCurrentAffairData(response?.data?.currentAffairs);
       setLoading(false);
     } catch (error) {

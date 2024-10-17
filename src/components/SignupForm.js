@@ -3,6 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import { toast } from 'react-hot-toast';
 import API_BASE_URL from "../config";
+import api from "../Api/Api_config";
 
 const SignupForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -30,8 +31,8 @@ const SignupForm = ({ onClose }) => {
     }
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/user/createUser`,
+      const response = await api.post(
+        "/api/Auth/createUser",
         { name, email, mobile, password, confirmPassword }
       );
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../../config";
+import api from "../../Api/Api_config";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -12,7 +13,7 @@ const Cart = () => {
   const fetchCartItems = async () => {
     try {
       console.log("Fetching cart items...");
-      const response = await axios.get(`${API_BASE_URL}/cart/get/${userId}`);
+      const response = await api.get(`api/cart/get/${userId}`);
       console.log("Cart items response:", response.data);
       const itemsInCart = response.data.cart?.items || [];
       setCartItems(itemsInCart);
@@ -28,7 +29,7 @@ const Cart = () => {
 
   const handleRemoveFromCart = async (itemId) => {
     try {
-      const response = await axios.delete(`${API_BASE_URL}/cart/remove`, {
+      const response = await api.delete("api/cart/remove", {
         data: {
           userId,
           itemId,
@@ -47,7 +48,7 @@ const Cart = () => {
 
   const updateQuantity = async (itemId, newQuantity) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/cart/update`, {
+      const response = await api.put("api/cart/update", {
         userId,
         itemId,
         quantity: newQuantity,

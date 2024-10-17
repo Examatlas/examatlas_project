@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import API_BASE_URL from "../config";
 import { useNavigate } from "react-router-dom";
+import api from "../Api/Api_config";
 
 const LoginForm = ({ onClose ,onLoginSuccess}) => {
   const [formData, setFormData] = useState({
@@ -26,8 +27,8 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
     console.log("Login submitted:", formData);
 
   try{
-    const response = await axios.post(
-      `${API_BASE_URL}/user/loginUser`,
+    const response = await api.post(
+      "/api/Auth/loginUser",
       {mobile,password}
     );
     

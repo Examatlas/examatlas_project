@@ -1,13 +1,14 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
 import API_BASE_URL from "../config";
+import api from "../Api/Api_config";
 
 const RecentCurrentAffairs = () => {
     const [CurrentAffairData, setCurrentAffairData] = useState([]);
 
     const fetchAllCurrentAffairs = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/currentAffair/getAllCA`);
+        const response = await api.get("/api/currentAffair/getAllCA");
         setCurrentAffairData(response?.data?.currentAffairs);
       } catch (error) {
         console.log("Error when fetching currentAffairs", error);

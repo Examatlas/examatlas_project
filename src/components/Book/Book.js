@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import API_BASE_URL from "../../config";
 import ex3 from "../../images/ex3.png";
 import Exam from "./Exam";
+import api from "../../Api/Api_config";
 
 const Book = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -21,13 +22,14 @@ const Book = () => {
   // Fetch all books, wishlist, and cart
   const fetchAllBooks = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/book/getAllBooks`);
+      // const response = await axios.get(`${API_BASE_URL}/book/getAllBooks`);
+      const response = await api.get("/api/book/getAllBooks");
       setCategoryData(response?.data?.books || []);
 
       const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
       setWishlist(storedWishlist);
 
-      const cartResponse = await axios.get(`${API_BASE_URL}/cart/get/${userId}`);
+      const cartResponse = await api.get(`api/cart/get/${userId}`);
       setCart(cartResponse.data.cartItems || []);
     } catch (error) {
       console.log(error);
@@ -46,7 +48,7 @@ const Book = () => {
     if (!bookId) return;
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/wishlist/toggleWishlist`, {
+      const response = await api.post(`api/wishlist/toggleWishlist`, {
         userId,
         bookId,
       });
@@ -75,7 +77,7 @@ const Book = () => {
     if (!bookId) return;
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/cart/add`, {
+      const response = await api.post(`api/cart/add`, {
         userId,
         bookId,
       });

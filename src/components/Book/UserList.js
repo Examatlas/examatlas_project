@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import API_BASE_URL from "../../config";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import api from "../../Api/Api_config";
 
 const UserList = ({ calculateTotal,checkoutHandler,setBillingDetailId}) => {
   const [userData, setUserData] = useState([]);
@@ -18,7 +19,7 @@ const UserList = ({ calculateTotal,checkoutHandler,setBillingDetailId}) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/billing/billing/user/${userId}`);
+        const response = await api.get(`api/billing/billing/user/${userId}`);
         setUserData(response.data);
         setLoading(false);
       } catch (error) {
@@ -33,7 +34,7 @@ const UserList = ({ calculateTotal,checkoutHandler,setBillingDetailId}) => {
     const userId = localStorage.getItem("userId");
 
     try {
-      await axios.delete(`${API_BASE_URL}/billing/billing/deletebilling/${userId}/${billingId}`);
+      await api.delete(`api/billing/billing/deletebilling/${userId}/${billingId}`);
       setUserData(userData.filter((user) => user._id !== billingId));
       setSelectedUserId(null); // Reset the selected user after delete
     } catch (error) {
@@ -51,7 +52,7 @@ const UserList = ({ calculateTotal,checkoutHandler,setBillingDetailId}) => {
     const userId = localStorage.getItem("userId");
 
     try {
-      await axios.put(`${API_BASE_URL}/billing/billing/updatebilling/${userId}/${editUserData._id}`, editUserData);
+      await api.put(`api/billing/billing/updatebilling/${userId}/${editUserData._id}`, editUserData);
       setUserData((prevData) =>
         prevData.map((user) => (user._id === editUserData._id ? editUserData : user))
       );

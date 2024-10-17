@@ -1,15 +1,17 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 // import { CiStreamOn } from "react-icons/ci";
 import API_BASE_URL from '../../config';
 import { Link } from 'react-router-dom';
 import img from '../../images/upsc.png'
+import api from '../../Api/Api_config';
+
 const UPSCLiveClass = () => {
   const [classData, setClassData] = useState();
   console.log(classData);
 
   const getAllLiveClass = async () => {
-    const responce = await axios.get(`${API_BASE_URL}/liveclass/getAllLiveClass`);
+    const responce = await api.get(`api/liveclass/getAllLiveClass`);
     if (responce) {
       setClassData(responce?.data?.classes)
     }

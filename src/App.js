@@ -26,6 +26,7 @@ import ScheduledLiveClasses from "./components/LiveClasses/ScheduledLiveClasses"
 
 import PaymentSuccess from "./components/Book/PaymentSuccess";
 import OrderTrack from "./components/Book/OrderTrack";
+import OrderHistory from "./components/Book/OrderHistory";
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
             {/* payment gateway  */}
             <Route path="/paymentsuccess" element={<PaymentSuccess />} />
             <Route path="ordertrack" element={<OrderTrack/>}/>
+
+            <Route path="/OrderHistory" element={<OrderHistory/>}/>
            
             <Route
               path="/livecourse/upsc-live-class"

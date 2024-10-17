@@ -6,6 +6,7 @@ import UserList from "./UserList";
 import { useNavigate } from "react-router-dom";
 import ex2 from "../../images/ex2.png";
 import { AuthContext } from "../../Auth/AuthContext";
+import api  from "../../Api/Api_config";
 // import dotenv from "dotenv";
 // dotenv.config()
 
@@ -24,19 +25,17 @@ const BillingForm = () => {
   });
 
   const navigate = useNavigate()
- 
 
   const [cartItems, setCartItems] = useState([]);
   const [billingDetails, setBillingDetails] = useState(null);
   const userId = localStorage.getItem("userId");
   const [billingDetailId, setBillingDetailId] = useState(null); // Initialize billingDetailId state
-  
 
   // Fetch cart items from the API
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/cart/get/${userId}`);
+        const response = await api.get(`api/cart/get/${userId}`);
         setCartItems(response.data.cart?.items || []);
       } catch (error) {
         toast.error("Error fetching cart items.");
@@ -65,8 +64,8 @@ const BillingForm = () => {
     ) {
       try {
         // Sending the POST request to create billing detail
-        const response = await axios.post(
-          `${API_BASE_URL}/billing/createBillingDetail`,
+        const response = await api.post(
+        "api/billing/createBillingDetail",
           { ...formData, userId } // Sending form data along with userId
         );
 
@@ -125,9 +124,10 @@ const BillingForm = () => {
 // console.log(process.env.REACT_APP_RAZORPAY_API_KEY)
   // payment gateway
   const checkoutHandler = async (amount) => {
-    // const { data: { key } } = await axios.get("http://localhost:5000/api/getkey");
     console.log(billingDetailId)
-    const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount , cartItems , userId , billingDetailId });  // user id , billing detail id , order id 
+    const { data: { order } } = await api.post("/api/payment/checkout", { amount , cartItems , userId , billingDetailId }); 
+
+    const token = localStorage.getItem('token');
 
     const options = {
       key : process.env.REACT_APP_RAZORPAY_API_KEY ,
@@ -137,7 +137,7 @@ const BillingForm = () => {
       description: "A Book Store",
       image: ex2,
       order_id: order.id,
-      callback_url: "http://localhost:5000/api/paymentverification",
+      callback_url: "http://localhost:5000/api/payment/paymentverification",
       prefill: {
         name: "ExamAtlas",
         email: "crownclassesrnc@gmail.com",
@@ -148,62 +148,15 @@ const BillingForm = () => {
       },
       theme: {
         "color": "#121212"
+      },
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     };
     const razor = new window.Razorpay(options);
     razor.open();
   }
 
-
-//  const checkoutHandler = async (amount) => {
-//   try {
-//     // Fetch the Razorpay key
-//     const { data: { key } } = await axios.get("http://localhost:5000/api/getkey");
-//     // Create an order
-//     const { data: { order } } = await axios.post("http://localhost:5000/api/checkout", { amount });
-
-//     const options = {
-//       key,
-//       amount: order.amount,
-//       currency: "INR",
-//       name: "ExamAtlas",
-//       description: "A Book Store",
-//       image: ex2,
-//       order_id: order.id,
-//       callback_url: "http://localhost:5000/api/paymentverification",
-//       prefill: {
-//         name: "ExamAtlas",
-//         email: "crownclassesrnc@gmail.com",
-//         contact: "6205435760"
-//       },
-//       notes: {
-//         "address": "Ranchi crown publication"
-//       },
-//       theme: {
-//         "color": "#121212"
-//       }
-//     };
-
-//     const razor = new window.Razorpay(options);
-//     razor.open();
-
-//     // Listen for the payment callback
-//     razor.on('payment.failed', async (response) => {
-//       // Handle payment failure here (optional)
-//       console.error('Payment failed:', response);
-//     });
-
-//     razor.on('payment.success', async (response) => {
-//       // Send user ID along with the payment details to the backend for verification
-//       await axios.post("http://localhost:5000/api/paymentverification", {
-//         userId: user.data._id, // Pass the user ID here
-//       });
-//     });
-
-//   } catch (error) {
-//     console.error('Checkout error:', error);
-//   }
-// };
 
   return (
     <div className="flex flex-col md:flex-row mt-[120px] mx-auto max-w-7xl p-8">

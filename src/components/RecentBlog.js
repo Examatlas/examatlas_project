@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
 import API_BASE_URL from "../config";
+import api from "../Api/Api_config";
 
 const RecentBlog = () => {
     const [blogData, setBlogData] = useState([]);
@@ -8,7 +9,7 @@ const RecentBlog = () => {
       // Fetch all blogs
   const fetchAllBlogs = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/blog/getAllBlogs`);
+      const response = await api.get("/api/blog/getAllBlogs");
       setBlogData(response?.data?.blogs || []); // Ensure that data is set as an array
     } catch (error) {
       console.log("Error when fetching blogs", error);

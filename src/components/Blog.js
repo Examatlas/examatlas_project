@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import API_BASE_URL from "../config";
 import RecentBlog from "./RecentBlog";
 import BlogLoading from "../loading/BlogLoading";
+import api from "../Api/Api_config";
 
 const Blog = () => {
   const [blogData, setBlogData] = useState([]); 
@@ -10,7 +11,7 @@ const Blog = () => {
   // Fetch all blogs
   const fetchAllBlogs = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/blog/getAllBlogs`);
+      const response = await api.get("/api/blog/getAllBlogs");
       setBlogData(response?.data?.blogs || []); 
       setLoading(false);
     } catch (error) {

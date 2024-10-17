@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast"; // Assuming you're using react-hot-toast for notifications
+import api from "../Api/Api_config";
 
 const EmailBox = () => {
     const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ const EmailBox = () => {
             setError('');
             try {
                 setLoading(true);
-                const response = await axios.post("http://localhost:5000/api/user/forgotpassword", { email });
+                const response = await api.post("/api/user/forgotpassword", { email });
                 
                 if (response.data.status) {
                     toast.success("Password reset link sent. Please check your email.");
