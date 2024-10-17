@@ -18,7 +18,7 @@ const EmailBox = () => {
             setError('');
             try {
                 setLoading(true);
-                const response = await api.post("/api/user/forgotpassword", { email });
+                const response = await axios.post("http://localhost:5000/api/auth/forgotpassword", { email });
                 
                 if (response.data.status) {
                     toast.success("Password reset link sent. Please check your email.");
