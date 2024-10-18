@@ -90,7 +90,10 @@ useEffect(() => {
           token={classInfo?.token}
           // token={`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiI0OWZkNjU0Ny1lZDQ0LTRhZGYtYTExMi1iOWNmMjlmNDU3NmEiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sInZlcnNpb24iOjIsInJvb21JZCI6IjJreXYtZ3pheS02NHBnIiwicGFydGljaXBhbnRJZCI6Imx4dmRwbHd0IiwiaWF0IjoxNzI3Njk0MDIwLCJleHAiOjE3Mjc3MDQ4MjB9.NnDHA_ioZ-VMw8Jnu4Rd-3QDIWGFLEhxIi_vitMigqA`}
           // config={{ meetingId, name: "C.V. Raman", mode: "VIEWER" }}
-          config={{ meetingId, name: `${classInfo?.user_name || 'User'}`, mode: "VIEWER" }}
+          config={{ meetingId, 
+          name: `${classInfo?.user_name || 'User'}`,
+          metaData: {userId: classInfo?.userId},
+           mode: "VIEWER" }}
           // config={{ meetingId:"c8m5-zj0q-h0lu", name: "C.V. Raman", mode: "VIEWER" }}
           joinWithoutUserInteraction
         >

@@ -3,11 +3,13 @@ import { useMeeting, usePubSub } from '@videosdk.live/react-sdk';
 
 //icons
 import { IoSend } from "react-icons/io5";
+import { useParams } from 'react-router-dom';
 
 const ChatView = () => {
     const meeting = useMeeting();
     const { publish, messages } = usePubSub("CHAT");
     const [inputMessage, setInputMessage] = useState('');
+    const {meetingId, scheduledClassId} = useParams();
 
     const scrollRef = useRef(null);
 
@@ -17,9 +19,9 @@ const ChatView = () => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
-
+  const currentUserId = meeting.localParticipant?.metaData?.userId;
     const handleSendMessage = () => {
-        publish(inputMessage, { persist: true });
+        publish(inputMessage, { persist: true }, {userId: currentUserId, meetingId,scheduledClassId });
         setInputMessage("");
     }
     return (
