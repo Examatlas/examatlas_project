@@ -61,7 +61,7 @@ function App() {
               element={<ScheduledLiveClasses />}
             />
             <Route
-              path="/livecourse/live/:meetingId/:token"
+              path="/livecourse/live/:meetingId/:scheduledClassId"
               element={<ViewerScreenContainer />}
             />
             <Route path="/currentaffairs" element={<CurrentAffairs />} />
